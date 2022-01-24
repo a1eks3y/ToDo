@@ -11,7 +11,7 @@ const PORT: number = config.get('port') || 5000
 const mongoUri: string = config.get('mongoUri')
 
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended : true }))
 app.use('/api/auth', authRoutes)
 app.use('/api/events', eventRoutes)
 app.use('/api/confirmEmail', confirmEmailRoutes)
@@ -21,11 +21,11 @@ app.use('/api/server', cleardbRoutes)
 async function start(): Promise<void> {
     await mongoose.connect(mongoUri)
     app.listen(PORT, () => {
-        console.log(`App has been started on port ${PORT}...`)
+        console.log(`App has been started on port ${ PORT }...`)
     })
 }
 
-start().catch((e) => {
+start().catch(( e ) => {
         console.log(e)
         process.exit(1)
     }

@@ -1,17 +1,11 @@
-import {Schema, model, Types} from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
+import { EventSchema } from "../types/Schemas";
 
-interface Event {
-    Date: number,
-    name: string,
-    description: string,
-    owner: Types.ObjectId
-}
-
-const schema = new Schema<Event>({
-    Date: {type: Number, required: true},
-    name: {type: String, required: true},
-    description: {type: String},
-    owner: {type: Types.ObjectId, ref: 'User'}
+const schema = new Schema<EventSchema>({
+    Date : { type : Number, required : true },
+    name : { type : String, required : true },
+    description : { type : String },
+    owner : { type : Types.ObjectId, ref : 'User' }
 })
 
-export const EventModel = model<Event>('Event', schema)
+export const EventModel = model<EventSchema>('Event', schema)

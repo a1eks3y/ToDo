@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react'
 
 const App: React.FC = () => {
     return (
         <div>
-          sasdasd
+          Hello!
         </div>
-    );
-};
+    )
+}
 
-export default App;
+export default App
