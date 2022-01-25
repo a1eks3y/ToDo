@@ -55,7 +55,7 @@ router.post('/register',
             })
             const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ ConfirmEmail }`
             await transporter.sendMail({
-                from : `"Aleksey Shvets" <${ config.get('email') }>`,
+                from : 'Organizer project - Confirm email',
                 to : email,
                 subject : 'Confirm email',
                 text : `Click on this link to confirm email ${ confirmEmailUrl }`,
@@ -78,7 +78,7 @@ router.post('/register',
         }
     }
 )
-router.post('/login',
+router.post('/login/form',
     check('email').normalizeEmail(),
     check('password').exists(),
     async ( req: express.Request<any, any, loginReq>, res ) => {
@@ -89,15 +89,16 @@ router.post('/login',
             }
             const isMatch = await bcrypt.compare(req.body.password, user.password)
             if ( !isMatch ) return res.status(400).json({ message : 'User not found 2' })
-            const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
+
             if ( typeof user.ConfirmEmail === 'string' ) {
+                const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
                 await transporter.sendMail({
-                    from : `"Aleksey Shvets" <${ config.get('email') }>`,
+                    from : 'Organizer project - Confirm email',
                     to : user.email,
                     subject : 'Confirm email',
                     text : `Click on this link to confirm email ${ confirmEmailUrl }`,
                     html : `<div>Click on this link to confirm email
-                                <b><a href="${confirmEmailUrl}">
+                                <b><a href="${ confirmEmailUrl }">
                                     ${ confirmEmailUrl }
                                 </a></b>
                            </div>`
@@ -111,15 +112,30 @@ router.post('/login',
             const token = jwt.sign(
                 { userId : user?.id },
                 jwtToken,
-                { expiresIn : '2h' }
+                { expiresIn : '5h' }
             )
 
-            return res.status(200).json({ token, userId : user.id, Timezone : user.Timezone })
+            return res.status(200).json(
+                { token, userId : user.id, Timezone : user.Timezone, username : user.username }
+            )
         } catch (e) {
             return res.status(500).json({ message : 'Try again later... 3' })
         }
     }
 )
+router.post('/login/jwt', auth,
+    ( _req, res: express.Response<any, AuthMwResLocals> ) => {
+        try {
+            const token = jwt.sign(
+                { userId : res.locals.userId },
+                jwtToken,
+                { expiresIn : '5h' }
+            )
+            res.status(200).json(token)
+        } catch (e) {
+            res.status(500).json({message: 'Try again later...'})
+        }
+    })
 router.delete('/user',
     auth,
     check('password').exists(),
