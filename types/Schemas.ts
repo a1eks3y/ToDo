@@ -12,6 +12,6 @@ export interface UserSchema {
     password: string,
     RecoveryCode: string | null,
     Timezone: number,
-    ConfirmEmail: boolean | string,
+    ConfirmEmail: boolean | null,
     Events: Types.ObjectId[]
 }

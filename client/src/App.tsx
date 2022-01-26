@@ -4,14 +4,21 @@ import { useEffect } from "react";
 import { useTypedSelector } from "./hooks/useTypedSelector";
 
 const App: React.FC = () => {
-    const { AuthLoginJWTAction } = useAction()
+    const { AuthLoginJWTAction, AuthRegisterAction } = useAction()
     const isAuth = useTypedSelector(state => state.auth.auth)
     useEffect(() => {
         if ( localStorage.getItem('userData') && !isAuth )
             AuthLoginJWTAction()
-    }, [])
+    })
     return (
-        <div>
+        <div onClick={() => {
+            AuthRegisterAction({
+                email: 'alesha1shvets@yandex.ru',
+                Timezone: 3,
+                password: '123456',
+                username: 'alesha'
+            })
+        }}>
             Hello!
         </div>
     )

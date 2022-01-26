@@ -95,7 +95,18 @@ export const AuthLoginJWTAction = () => {
                     Authorization : `Bearer ${ jwt }`
                 }
             })
-            localStorage.removeItem('userData')
+            if ( res.status === 409 ) {
+                const msg = res.data
+                dispatch(
+                    addMessageActionCreator(id, msg,true)
+                )
+                setTimeout(() => {
+                    dispatch(deleteMessageActionCreator(id))
+                }, 7000)
+            }
+            else {
+                localStorage.removeItem('userData')
+            }
             if ( res.status === 200 ) {
                 const newJwt = res.data
 
