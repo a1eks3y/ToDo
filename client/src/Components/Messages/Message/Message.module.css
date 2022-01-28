@@ -1,0 +1,73 @@
+.message{
+    display: flex;
+    padding: 1px 1px 1px 10px;
+    align-items: center;
+    width: 300px;
+    height: 77px;
+    background: #F1F4F6;
+    border-radius: 3px;
+    opacity: 1;
+    transform: translateX(0);
+    margin-top: 5px;
+}
+.badNews{
+    border-left: 4px solid #ff0000;
+}
+.goodNews{
+    border-left: 4px solid #41ff00;
+}
+.btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.btn::after, .btn::before{
+    cursor: pointer;
+    content: ' ';
+    position: absolute;
+    top: 10px;
+    right: 4px;
+    width: 16px;
+    height: 1px;
+    background: gray;
+}
+.btn:hover:before,
+.btn:hover:after{
+    background: red;
+}
+.btn::after{
+    transform: rotate(45deg);
+}
+.btn::before{
+    transform: rotate(-45deg);
+}
+.img{
+    margin-left: 1px;
+    color: black;
+    width: 40px;
+    margin-right: 8px;
+}
+.firstRender{
+    transform: translateX(314px);
+    opacity: 0;
+    animation: 1s load ease-out ;
+    animation-fill-mode: forwards;
+}
+@keyframes load {
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+.delete{
+    transform: translateX(0);
+    opacity: 1;
+    animation: 1s delete ease-out ;
+    animation-fill-mode: forwards;
+}
+@keyframes delete {
+    100%{
+        transform: translateX(314px);
+        opacity: 0;
+    }
+}

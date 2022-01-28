@@ -1,7 +1,7 @@
 export interface IAuthState {
     timezone?: number,
     username?: string,
-    auth: boolean,
+    isAuth: boolean,
     isLoading: boolean
 }
 
@@ -19,7 +19,7 @@ interface AuthActionAuthorizationSuccess {
     type: AuthActionType.AUTHORIZATION_SUCCESS
     payload: {
         timezone: number,
-        username:string
+        username: string
     }
 }
 

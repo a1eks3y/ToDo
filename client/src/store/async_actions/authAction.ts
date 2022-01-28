@@ -2,7 +2,10 @@ import { Dispatch } from "redux";
 import { AuthActionType, IAuthAction, ILoginAction, IRegisterAction, IUserData } from "../../types/Auth";
 import axios from "axios";
 import { MessageAction } from "../../types/Message";
-import { addMessageActionCreator, deleteMessageActionCreator } from "../actionsCreator/messageActionCreator";
+import {
+    addMessageActionCreator,
+    willBeDeletedMessageActionCreator
+} from "../actionsCreator/messageActionCreator";
 
 export const AuthRegisterAction = ( payload: IRegisterAction ) => {
     return async ( dispatch: Dispatch<IAuthAction | MessageAction> ) => {
@@ -25,22 +28,18 @@ export const AuthRegisterAction = ( payload: IRegisterAction ) => {
                     })
                 dispatch(addMessageActionCreator(id, data.message, false))
                 setTimeout(() => {
-                    dispatch(deleteMessageActionCreator(id))
-                }, 4250)
+                    dispatch(willBeDeletedMessageActionCreator(id))
+                }, 3250)
             }
-            else {
-                dispatch(addMessageActionCreator(id, data.message, true))
-                setTimeout(() => {
-                    dispatch(deleteMessageActionCreator(id))
-                }, 7000)
-            }
-        } catch (e) {
+        } catch (e: any) {
+            const message = e.response.message || e.response.data.message
+            dispatch({ type : AuthActionType.LOGOUT })
             dispatch(
-                addMessageActionCreator(id, 'Something went wrong. Try again later...', true)
+                addMessageActionCreator(id, message || 'Something went wrong. Try again later...', true)
             )
             setTimeout(() => {
-                dispatch(deleteMessageActionCreator(id))
-            }, 7000)
+                dispatch(willBeDeletedMessageActionCreator(id))
+            }, 6000)
         }
     }
 }
@@ -65,19 +64,15 @@ export const AuthLoginFormAction = ( payload: ILoginAction ) => {
                     }
                 })
             }
-            else {
-                dispatch(addMessageActionCreator(id, data.message, true))
-                setTimeout(() => {
-                    dispatch(deleteMessageActionCreator(id))
-                }, 7000)
-            }
-        } catch (e) {
-            dispatch(addMessageActionCreator(id, 'Something went wrong. Try again later...',
+        } catch (e: any) {
+            const message = e.response.message || e.response.data.message
+            dispatch({ type : AuthActionType.LOGOUT })
+            dispatch(addMessageActionCreator(id, message || 'Something went wrong. Try again later...',
                 true)
             )
             setTimeout(() => {
-                dispatch(deleteMessageActionCreator(id))
-            }, 7000)
+                dispatch(willBeDeletedMessageActionCreator(id))
+            }, 6000)
         }
     }
 }
@@ -85,6 +80,7 @@ export const AuthLoginFormAction = ( payload: ILoginAction ) => {
 export const AuthLoginJWTAction = () => {
     return async ( dispatch: Dispatch<IAuthAction | MessageAction> ) => {
         const id = new Date().getTime()
+
         try {
             dispatch({ type : AuthActionType.AUTHORIZATION })
             const userData = localStorage.getItem('userData')
@@ -95,18 +91,8 @@ export const AuthLoginJWTAction = () => {
                     Authorization : `Bearer ${ jwt }`
                 }
             })
-            if ( res.status === 409 ) {
-                const msg = res.data
-                dispatch(
-                    addMessageActionCreator(id, msg,true)
-                )
-                setTimeout(() => {
-                    dispatch(deleteMessageActionCreator(id))
-                }, 7000)
-            }
-            else {
-                localStorage.removeItem('userData')
-            }
+            localStorage.removeItem('userData')
+
             if ( res.status === 200 ) {
                 const newJwt = res.data
 
@@ -116,20 +102,18 @@ export const AuthLoginJWTAction = () => {
                         timezone
                     }
                 })
-
-
                 localStorage.setItem('userData', JSON.stringify({ jwt : newJwt, username, timezone }))
             }
-            else {
-                throw new Error()
-            }
-        } catch (e) {
-            dispatch(addMessageActionCreator(id, 'Something went wrong. Try again later...',
+        } catch (e: any) {
+            if ( e.response.status !== 409 ) localStorage.removeItem('userData')
+            const message = e.response.message || e.response.data.message
+            dispatch({ type : AuthActionType.LOGOUT })
+            dispatch(addMessageActionCreator(id, message || 'Something went wrong. Try again later...',
                 true)
             )
             setTimeout(() => {
-                dispatch(deleteMessageActionCreator(id))
-            }, 7000)
+                dispatch(willBeDeletedMessageActionCreator(id))
+            }, 6000)
         }
     }
 }

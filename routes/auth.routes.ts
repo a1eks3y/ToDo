@@ -34,13 +34,15 @@ router.post('/register',
         try {
             const errors = validationResult(req)
             if ( !errors.isEmpty() ) {
-                return res.status(400).json({ errors : errors.array(), message : 'Invalid data at registration' })
+                return res.status(400).json(
+                    { errors : errors.array(), message : 'Invalid data at registration.' }
+                )
             }
 
             const { email, password, username, Timezone } = req.body
             const candidate = await UserModel.findOne({ email : email })
             if ( candidate ) {
-                return res.status(400).json({ message : "User already exist" })
+                return res.status(400).json({ message : "User already exist." })
             }
 
             const hashedPassword = await bcrypt.hash(password, 12)
@@ -73,7 +75,9 @@ router.post('/register',
             await user.save()
 
 
-            return res.status(201).json({ token, username, userId : user.id, Timezone, message : 'User created' })
+            return res.status(201).json(
+                { token, username, userId : user.id, Timezone, message : 'User created.' }
+            )
         } catch (e) {
             return res.status(500).json({ message : e.message })
         }
@@ -86,10 +90,10 @@ router.post('/login/form',
         try {
             const user = await UserModel.findOne({ email : req.body.email })
             if ( !user ) {
-                return res.status(400).json({ message : "User not found 1" })
+                return res.status(400).json({ message : "User not found." })
             }
             const isMatch = await bcrypt.compare(req.body.password, user.password)
-            if ( !isMatch ) return res.status(400).json({ message : 'User not found 2' })
+            if ( !isMatch ) return res.status(400).json({ message : 'User not found.' })
 
             if ( typeof user.ConfirmEmail === 'string' ) {
                 const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
@@ -119,7 +123,7 @@ router.post('/login/form',
                 { token, userId : user.id, Timezone : user.Timezone, username : user.username }
             )
         } catch (e) {
-            return res.status(500).json({ message : 'Try again later... 3' })
+            return res.status(500).json({ message : 'Try again later...' })
         }
     }
 )
@@ -127,9 +131,9 @@ router.post('/login/jwt', auth,
     async ( _req, res: express.Response<any, AuthMwResLocals> ) => {
         try {
             const user = await UserModel.findById(res.locals.userId)
-            if ( !user ) return res.status(400).json({ message : 'User not found' })
+            if ( !user ) return res.status(400).json({ message : 'User not found.' })
 
-            if (typeof user.ConfirmEmail == 'string') {
+            if ( typeof user.ConfirmEmail == 'string' ) {
                 const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
                 await transporter.sendMail({
                     from : 'Organizer project - Confirm email',
@@ -164,10 +168,10 @@ router.delete('/user',
         try {
 
             const user = await UserModel.findById(res.locals.userId)
-            if ( !user ) return res.status(400).json({ message : 'User not found' })
+            if ( !user ) return res.status(400).json({ message : 'User not found.' })
 
             const isMatch = await bcrypt.compare(req.body.password, user.password)
-            if ( !isMatch ) return res.status(400).json({ message : 'Wrong password' })
+            if ( !isMatch ) return res.status(400).json({ message : 'Wrong password.' })
 
             const event = await EventModel.find({ owner : res.locals.userId })
 
@@ -179,7 +183,7 @@ router.delete('/user',
 
             await user.delete()
 
-            return res.status(201).json({ message : 'User deleted' })
+            return res.status(201).json({ message : 'User deleted.' })
         } catch (e) {
             return res.status(500).json({ message : 'Try again later...' })
         }
