@@ -1,0 +1,47 @@
+.wrapper {
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.wrapper > span{
+    margin-bottom: 20px;
+}
+.waitTime{
+    margin: 0 100px 0 0;
+    color: #787993;
+}
+.buttons{
+    width: 330px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.btn_send {
+    width: 230px;
+    height: 3rem;
+    border-radius: 23px;
+    color: #7540EE;
+    background: rgba(117, 64, 238, .2);
+    transition: all .2s ease-out;
+}
+.btn_send:hover, .btn_send:focus {
+    background: rgba(117, 64, 238, 0.4);
+}
+.btn_logout {
+    width: 90px;
+    height: 3rem;
+    border-radius: 23px;
+    color: #FF7052;
+    background: rgba(255, 112, 82, .2);
+    transition: all .2s ease-out;
+}
+.btn_logout:hover, .btn_logout:focus {
+    background: rgba(255, 112, 82, 0.4);
+}
+.btn_send:disabled, .btn_logout:disabled{
+    cursor: not-allowed;
+}

@@ -57,9 +57,9 @@ router.post('/register',
             })
             const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ ConfirmEmail }`
             await transporter.sendMail({
-                from : 'Organizer project - Confirm email',
+                from : config.get('email'),
                 to : email,
-                subject : 'Confirm email',
+                subject : 'Organizer project - Confirm email',
                 text : `Click on this link to confirm email ${ confirmEmailUrl }`,
                 html : `<div>Click on this 
                             <b><a href="${ confirmEmailUrl }">link</a></b>
@@ -69,14 +69,22 @@ router.post('/register',
             const token = jwt.sign(
                 { userId : user?.id },
                 jwtToken,
-                { expiresIn : '2h' }
+                { expiresIn : '5d' }
             )
 
             await user.save()
 
 
             return res.status(201).json(
-                { token, username, userId : user.id, Timezone, message : 'User created.' }
+                {
+                    token,
+                    username,
+                    userId : user.id,
+                    Timezone,
+                    message : 'User created.',
+                    emailConfirmed : user.ConfirmEmail === null,
+                    email
+                }
             )
         } catch (e) {
             return res.status(500).json({ message : e.message })
@@ -98,16 +106,16 @@ router.post('/login/form',
             if ( typeof user.ConfirmEmail === 'string' ) {
                 const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
                 await transporter.sendMail({
-                    from : 'Organizer project - Confirm email',
+                    from : config.get('email'),
                     to : user.email,
-                    subject : 'Confirm email',
+                    subject : 'Organizer project - Confirm email',
                     text : `Click on this link to confirm email ${ confirmEmailUrl }`,
                     html : `<div>Click on this 
                                 <b><a href="${ confirmEmailUrl }">link</a></b>
                                 to confirm email
                             </div>`
                 })
-                return res.status(409).json(
+                res.status(409).json(
                     {
                         message : 'You must confirm email. If you can\'t found letter then check the Spam folder...'
                     }
@@ -116,11 +124,18 @@ router.post('/login/form',
             const token = jwt.sign(
                 { userId : user?.id },
                 jwtToken,
-                { expiresIn : '5h' }
+                { expiresIn : '5d' }
             )
 
             return res.status(200).json(
-                { token, userId : user.id, Timezone : user.Timezone, username : user.username }
+                {
+                    token,
+                    userId : user.id,
+                    Timezone : user.Timezone,
+                    username : user.username,
+                    emailConfirmed : user.ConfirmEmail === null,
+                    email : user.email
+                }
             )
         } catch (e) {
             return res.status(500).json({ message : 'Try again later...' })
@@ -128,7 +143,8 @@ router.post('/login/form',
     }
 )
 router.post('/login/jwt', auth,
-    async ( _req, res: express.Response<any, AuthMwResLocals> ) => {
+    async ( _req,
+            res: express.Response<any, AuthMwResLocals> ) => {
         try {
             const user = await UserModel.findById(res.locals.userId)
             if ( !user ) return res.status(400).json({ message : 'User not found.' })
@@ -136,15 +152,16 @@ router.post('/login/jwt', auth,
             if ( typeof user.ConfirmEmail == 'string' ) {
                 const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
                 await transporter.sendMail({
-                    from : 'Organizer project - Confirm email',
+                    from : config.get('email'),
                     to : user.email,
-                    subject : 'Confirm email',
+                    subject : 'Organizer project - Confirm email',
                     text : `Click on this link to confirm email ${ confirmEmailUrl }`,
                     html : `<div>Click on this 
                                 <b><a href="${ confirmEmailUrl }">link</a></b>
                                 to confirm email
                             </div>`
                 })
+
                 return res.status(409).json(
                     {
                         message : 'You must confirm email. If you can\'t found letter then check the Spam folder...'
@@ -154,9 +171,13 @@ router.post('/login/jwt', auth,
             const token = jwt.sign(
                 { userId : res.locals.userId },
                 jwtToken,
-                { expiresIn : '5h' }
+                { expiresIn : '5d' }
             )
-            return res.status(200).json(token)
+
+            return res.status(200).json({
+                token,
+                emailConfirmed : user.ConfirmEmail === null
+            })
         } catch (e) {
             return res.status(500).json({ message : 'Try again later...' })
         }
@@ -164,7 +185,8 @@ router.post('/login/jwt', auth,
 router.delete('/user',
     auth,
     check('password').exists(),
-    async ( req: express.Request<any, any, deleteReqBody>, res: express.Response<any, AuthMwResLocals> ) => {
+    async ( req: express.Request<any, any, deleteReqBody>,
+            res: express.Response<any, AuthMwResLocals> ) => {
         try {
 
             const user = await UserModel.findById(res.locals.userId)

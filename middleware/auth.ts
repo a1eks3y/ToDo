@@ -21,6 +21,7 @@ export default ( req: express.Request, res: express.Response<any, authRes>, next
         res.locals.userId = userId
         next()
     } catch (e) {
+        console.log(req.headers.authorization)
         return res.status(401).json({ message : 'jwt expired' })
     }
 }

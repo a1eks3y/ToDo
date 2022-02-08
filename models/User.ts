@@ -6,7 +6,7 @@ const schema = new Schema<UserSchema>({
     password : { type : String, required : true },
     username : { type : String, required : true },
     RecoveryCode : { type : String || null },
-    ConfirmEmail : { type : String || Boolean, required : true },
+    ConfirmEmail : { type : String || Boolean },
     Timezone : { type : Number, required : true },
     Events : [{ type : Types.ObjectId, ref : 'Event' }]
 })

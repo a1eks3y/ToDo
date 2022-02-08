@@ -3,7 +3,7 @@
     padding: 1px 1px 1px 10px;
     align-items: center;
     width: 300px;
-    height: 77px;
+    height: 8.8vh;
     background: #F1F4F6;
     border-radius: 3px;
     opacity: 1;
@@ -62,7 +62,7 @@
 .delete{
     transform: translateX(0);
     opacity: 1;
-    animation: 1s delete ease-out ;
+    animation: 1s delete ease-out;
     animation-fill-mode: forwards;
 }
 @keyframes delete {

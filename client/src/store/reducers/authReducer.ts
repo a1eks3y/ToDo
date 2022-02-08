@@ -14,13 +14,14 @@ export const AuthReducer = ( state: IAuthState = defaultState, action: IAuthActi
                 isAuth : true,
                 isLoading : false,
                 username : action.payload.username,
-                timezone : action.payload.timezone
+                timezone : action.payload.timezone,
+                emailConfirmed : action.payload.emailConfirmed
             }
+        case AuthActionType.AUTHORIZATION_ERROR:
+            return { ...state, isLoading : false }
         case AuthActionType.LOGOUT:
             return { isAuth : false, isLoading : false }
         default:
-            if ( state )
-                return { ...state }
-            return { isAuth : false, isLoading : false }
+            return { ...state }
     }
 }

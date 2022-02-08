@@ -5,7 +5,7 @@ import {
     willBeDeletedMessageActionCreator
 } from "../../../store/actionsCreator/messageActionCreator";
 import { useDispatch } from "react-redux";
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch, useCallback, useEffect, useState } from "react";
 import { MessageAction } from "../../../types/Message";
 import img from '../../../image/logo.png'
 
@@ -20,10 +20,10 @@ const Message: React.FC<IMessageFC> = (
     { willBeDeleted, isBad, message, messageId } ) => {
     const dispatch = useDispatch<Dispatch<MessageAction>>()
     const [deleteStyle, setDeleteStyle] = useState<string>('')
-    const deleteHandler = () => {
+    const deleteHandler = useCallback(() => {
         dispatch(deleteMessageActionCreator(messageId))
-    }
-    const willBeDeleteHandeler = () => {
+    }, [dispatch, messageId])
+    const willBeDeleteHandler = () => {
         dispatch(willBeDeletedMessageActionCreator(messageId))
     }
     useEffect(() => {
@@ -33,17 +33,17 @@ const Message: React.FC<IMessageFC> = (
                 deleteHandler()
             }, 1000)
         }
-    }, [willBeDeleted])
+    }, [willBeDeleted, deleteHandler])
     return (
         <div
             className={
                 deleteStyle +
-                (s.firstRender + ' ' ) +
+                (s.firstRender + ' ') +
                 (isBad ? s.badNews : s.goodNews) + ' ' + s.message
             }>
             <img className={ s.img } src={ img } alt={ 'logo' }/>
             { message }
-            <button className={ s.btn } onClick={ willBeDeleteHandeler }/>
+            <button className={ s.btn } onClick={ willBeDeleteHandler }/>
         </div>
     )
 }

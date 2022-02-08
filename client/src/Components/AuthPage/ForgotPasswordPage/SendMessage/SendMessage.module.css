@@ -1,0 +1,31 @@
+.form {
+    height: 300px;
+}
+.top_text{
+    margin-bottom: 40px;
+}
+.top_text > h6{
+    font-style: italic;
+    color: #787993;
+}
+.custom_btn {
+    margin-top: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(117, 64, 238, 0.2);
+    width: 105px;
+    height: 43px;
+    border-radius: 23px;
+    color: #7540EE;
+    transition: all .2s ease-out;
+}
+
+.custom_btn:hover, .custom_btn:focus {
+    background: rgba(117, 64, 238, 0.4);
+}
+.custom_btn:disabled{
+    cursor: not-allowed;
+    background: rgba(117, 64, 238, 0.1);
+    color: rgba(117, 64, 238, 0.3);;
+}

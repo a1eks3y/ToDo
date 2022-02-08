@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes'
 import eventRoutes from './routes/event.routes'
 import confirmEmailRoutes from "./routes/confirmEmail.routes";
 import cleardbRoutes from "./routes/cleardb.routes";
+import changePasswordRoutes from "./routes/changePassword";
 
 const app = express()
 const PORT: number = config.get('port') || 5000
@@ -16,6 +17,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/events', eventRoutes)
 app.use('/api/confirmEmail', confirmEmailRoutes)
 app.use('/api/server', cleardbRoutes)
+app.use('/api/recover_password', changePasswordRoutes)
 
 
 async function start(): Promise<void> {
