@@ -13,9 +13,9 @@ export const AuthReducer = ( state: IAuthState = defaultState, action: IAuthActi
             return {
                 isAuth : true,
                 isLoading : false,
-                username : action.payload.username,
-                timezone : action.payload.timezone,
-                emailConfirmed : action.payload.emailConfirmed
+                userData: {
+                    ...action.payload
+                }
             }
         case AuthActionType.AUTHORIZATION_ERROR:
             return { ...state, isLoading : false }

@@ -16,12 +16,12 @@ import UpdatePassword from "./Components/AuthPage/ForgotPasswordPage/UpdatePassw
 
 const App: React.FC = () => {
     const { AuthLoginJWTAction } = useAction()
-    const { isAuth, isLoading, emailConfirmed } = useTypedSelector(state => state.auth)
+    const { isAuth, isLoading, userData } = useTypedSelector(state => state.auth)
     const LoginJWT = useCallback(() => {
-        if ( localStorage.getItem('userData') && !isAuth && !isLoading ) try {
+        if ( localStorage.getItem('jwt') && !isAuth && !isLoading ) try {
             AuthLoginJWTAction()
         } catch (e) {
-            localStorage.removeItem('userData')
+            localStorage.removeItem('jwt')
         }
     }, [AuthLoginJWTAction, isAuth, isLoading])
     useEffect(() => {
@@ -33,7 +33,7 @@ const App: React.FC = () => {
             { isLoading && <Loader width={ '100vw' } height={ '100vh' }/> }
             <Routes>
                 { !isLoading &&
-                    (!isAuth
+                    (!isAuth && !userData
                             ?
                             <>
                                 <Route path='/*' element={ <AuthPage/> }>
@@ -50,7 +50,7 @@ const App: React.FC = () => {
 
                             :
                             (
-                                !emailConfirmed
+                                userData && !userData.emailConfirmed
                                     ?
                                     <>
                                         <Route path='/confirm-email' element={ <ConfirmEmailPage/> }/>

@@ -1,7 +1,9 @@
 export interface IAuthState {
-    timezone?: number,
-    username?: string,
-    emailConfirmed?: boolean
+    userData?: {
+        timezone: number,
+        username: string,
+        emailConfirmed: boolean
+    }
     isAuth: boolean,
     isLoading: boolean
 }
@@ -49,7 +51,9 @@ export interface IRegisterAction {
     username: string,
     Timezone: number
 }
-
+export interface JWTLsI {
+    jwtToken: string
+}
 export interface IUserData {
     username: string,
     timezone: number,

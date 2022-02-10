@@ -13,9 +13,9 @@ interface IUseOutletContext {
 
 const SendMessage: React.FC = () => {
     const { email, setEmail, isLoading, sendRecoveryCode } = useOutletContext() as IUseOutletContext
-    const onSubmitHandler = async ( e: FormEvent<HTMLFormElement> ) => {
+    const onSubmitHandler = ( e: FormEvent<HTMLFormElement> ) => {
         e.preventDefault()
-        await sendRecoveryCode()
+        sendRecoveryCode()
     }
     return (
         <div>

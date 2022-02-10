@@ -69,7 +69,7 @@ router.post('/register',
             const token = jwt.sign(
                 { userId : user?.id },
                 jwtToken,
-                { expiresIn : '5d' }
+                { expiresIn : '5h' }
             )
 
             await user.save()
@@ -79,7 +79,6 @@ router.post('/register',
                 {
                     token,
                     username,
-                    userId : user.id,
                     Timezone,
                     message : 'User created.',
                     emailConfirmed : user.ConfirmEmail === null,
@@ -124,13 +123,12 @@ router.post('/login/form',
             const token = jwt.sign(
                 { userId : user?.id },
                 jwtToken,
-                { expiresIn : '5d' }
+                { expiresIn : '5h' }
             )
 
             return res.status(200).json(
                 {
                     token,
-                    userId : user.id,
                     Timezone : user.Timezone,
                     username : user.username,
                     emailConfirmed : user.ConfirmEmail === null,
@@ -171,12 +169,15 @@ router.post('/login/jwt', auth,
             const token = jwt.sign(
                 { userId : res.locals.userId },
                 jwtToken,
-                { expiresIn : '5d' }
+                { expiresIn : '5h' }
             )
 
             return res.status(200).json({
-                token,
-                emailConfirmed : user.ConfirmEmail === null
+                jwt: token,
+                username : user.username,
+                Timezone : user.Timezone,
+                emailConfirmed : user.ConfirmEmail === null,
+                email : user.email
             })
         } catch (e) {
             return res.status(500).json({ message : 'Try again later...' })

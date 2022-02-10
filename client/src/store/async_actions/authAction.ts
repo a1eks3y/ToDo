@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { AuthActionType, IAuthAction, ILoginAction, IRegisterAction, IUserData } from "../../types/Auth";
+import { AuthActionType, IAuthAction, ILoginAction, IRegisterAction, IUserData, JWTLsI } from "../../types/Auth";
 import axios from "axios";
 import { MessageAction } from "../../types/Message";
 import {
@@ -15,19 +15,16 @@ export const AuthRegisterAction = ( payload: IRegisterAction ) => {
             const res = await axios.post('api/auth/register', payload)
 
             const data = res.data
-            localStorage.removeItem('userData')
-            localStorage.setItem('userData', JSON.stringify({
-                jwt : data.token,
-                username : data.username,
-                timezone : data.Timezone,
-                email : data.email,
-                emailConfirmed : data.emailConfirmed
+            localStorage.removeItem('jwt')
+            localStorage.setItem('jwt', JSON.stringify({
+                jwtToken : data.token
             }))
             dispatch({
                 type : AuthActionType.AUTHORIZATION_SUCCESS, payload : {
+                    email : data.email,
                     username : data.username,
                     timezone : data.Timezone,
-                    emailConfirmed : res.data.emailConfirmed
+                    emailConfirmed : data.emailConfirmed
                 }
             })
             dispatch(addMessageActionCreator(id, data.message, false))
@@ -54,19 +51,15 @@ export const AuthLoginFormAction = ( payload: ILoginAction ) => {
             const res = await axios.post('api/auth/login/form', payload)
 
             const data = res.data
-            localStorage.removeItem('userData')
-            localStorage.setItem('userData', JSON.stringify({
-                jwt : data.token,
-                username : data.username,
-                timezone : data.Timezone,
-                email : data.email,
-                emailConfirmed : data.emailConfirmed
-
+            localStorage.removeItem('jwt')
+            localStorage.setItem('jwt', JSON.stringify({
+                jwtToken : data.token
             }))
             dispatch({
                 type : AuthActionType.AUTHORIZATION_SUCCESS, payload : {
                     username : data.username,
                     timezone : data.Timezone,
+                    email : data.email,
                     emailConfirmed : data.emailConfirmed
                 }
             })
@@ -89,34 +82,31 @@ export const AuthLoginJWTAction = () => {
         const id = new Date().getTime()
         try {
             dispatch({ type : AuthActionType.AUTHORIZATION })
-            const userData = localStorage.getItem('userData')
-            if ( !userData ) throw new Error()
-            const { jwt, username, timezone, email } = JSON.parse(userData) as IUserData
-            const res = await axios.post('/api/auth/login/jwt', jwt, {
+            const jwt = localStorage.getItem('jwt')
+            if ( !jwt ) throw new Error()
+            const { jwtToken } = JSON.parse(jwt) as JWTLsI
+            const res = await axios.post('/api/auth/login/jwt', jwtToken, {
                 headers : {
                     Authorization : `Bearer ${ jwt }`
                 }
             })
-            localStorage.removeItem('userData')
+            localStorage.removeItem('jwt')
 
-            const { token, emailConfirmed } = res.data
+            const data: IUserData = res.data
 
             dispatch({
                 type : AuthActionType.AUTHORIZATION_SUCCESS, payload : {
-                    username,
-                    timezone,
-                    emailConfirmed
+                    username : data.username,
+                    timezone : data.timezone,
+                    email : data.email,
+                    emailConfirmed : data.emailConfirmed
                 }
             })
-            localStorage.setItem('userData', JSON.stringify({
-                jwt : token,
-                username,
-                timezone,
-                email,
-                emailConfirmed
+            localStorage.setItem('jwt', JSON.stringify({
+                jwtToken : data.jwt
             }))
         } catch (e: any) {
-            if ( e.response.status !== 409 ) localStorage.removeItem('userData')
+            if ( e.response.status !== 409 ) localStorage.removeItem('jwt')
             const message = e.response.message || e.response.data.message
             dispatch({ type : AuthActionType.LOGOUT })
             dispatch(addMessageActionCreator(id, message || 'Something went wrong. Try again later...',
