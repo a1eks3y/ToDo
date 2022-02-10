@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useOutletContext } from "react-router-dom";
+import { NavLink, useOutletContext } from "react-router-dom";
 import s from './SendMessage.module.css'
 import { FormEvent } from "react";
 import Loader from "../../../Loader/Loader";
@@ -32,13 +32,17 @@ const SendMessage: React.FC = () => {
                     required
                     minLength={ 1 }
                     autoComplete='current-email'
-                    type="text" placeholder='Email address'/>
+                    type="email" placeholder='Email address'/>
                 <button
                     className={ s.custom_btn }
                     disabled={ isLoading }
                 >
                     Send code
                 </button>
+                <div className={s.navigate_to_login}>
+                    Remembered the password?&nbsp;
+                    <NavLink className={s.navLink} to={'/../login'} replace>Login</NavLink>
+                </div>
             </form>
         </div>
     )

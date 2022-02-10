@@ -26,7 +26,7 @@ const RegisterPage: React.FC = () => {
     )
     const registerHandler: FormEventHandler = ( e ) => {
         e.preventDefault()
-        const Timezone: number = timezone[ 0 ] === '-' ?
+        const Timezone: number = timezone[ 0 ] === '-' ? //parse Timezone
             +timezone.split(':')[ 0 ] - +timezone.split(':')[ 1 ] / 60
             : +timezone.split(':')[ 0 ] + +timezone.split(':')[ 1 ] / 60
         AuthRegisterAction({
@@ -48,7 +48,7 @@ const RegisterPage: React.FC = () => {
                     className={ s.email_input }
                     required
                     autoComplete='current-email'
-                    type="text" placeholder='Email address'/>
+                    type="email" placeholder='Email address'/>
                 <input
                     value={ password }
                     onChange={ e => setPassword(e.target.value) }

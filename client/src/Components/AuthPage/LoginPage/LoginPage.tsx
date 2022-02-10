@@ -23,7 +23,7 @@ const LoginPage: React.FC = () => {
                     className={ s.email_input }
                     required
                     autoComplete='current-email'
-                    type="text" placeholder='Email address'/>
+                    type="email" placeholder='Email address'/>
                 <input
                     value={ password }
                     onChange={ e => setPassword(e.target.value) }

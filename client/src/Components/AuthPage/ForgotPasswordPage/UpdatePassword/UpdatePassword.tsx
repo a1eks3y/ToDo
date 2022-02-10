@@ -32,8 +32,8 @@ const UpdatePassword: React.FC = () => {
             UpdatePassword(password, RecoveryCode)
         }
     }
-    if ( !email )
-        return <Navigate to='/send_msg'/>
+    if ( !email || !email.match(/\w+@\w+\.\w+/g) )
+        return <Navigate to='send_msg'/>
     return (
         <div>
             { isLoading && <Loader width={ '100%' } height={ '40%' }/> }
@@ -77,6 +77,9 @@ const UpdatePassword: React.FC = () => {
                 >
                     Change password
                 </button>
+                <div className={s.navigate_to_login}>
+                    Remembered the password?&nbsp;<NavLink className={s.navLink} to={'/../login'} replace>Login</NavLink>
+                </div>
             </form>
         </div>
     )

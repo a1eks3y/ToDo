@@ -19,6 +19,7 @@ const ForgotPasswordPage: React.FC = () => {
     const sendRecoveryCode = async () => {
         const id = new Date().getTime()
         try {
+            if(!email.match(/\w+@\w+\.\w+/g)) throw new Error('Wrong email')
             setIsLoading(true)
             const res = await axios.post('/api/recover_password/send', { email })
             dispatch(addMessageActionCreator(id,
@@ -31,7 +32,8 @@ const ForgotPasswordPage: React.FC = () => {
             navigate('update_password')
         } catch (e: any) {
             dispatch(addMessageActionCreator(id,
-                (e && (e.message || e.data.message))
+                e && (e.response && e.response.data.message)
+                || e.message
                 || 'Something went wrong. Try again later...',
                 true)
             )
@@ -45,11 +47,9 @@ const ForgotPasswordPage: React.FC = () => {
     const UpdatePassword = async ( password: string, RecoveryCode: string ) => {
         const id = new Date().getTime()
         try {
-            debugger
             setIsLoading(true)
             const res = await axios.post('/api/recover_password/confirm',
                 { email, newPassword : password, RecoveryCode })
-            debugger
             dispatch(addMessageActionCreator(id,
                 res.data.message,
                 false)
@@ -73,7 +73,6 @@ const ForgotPasswordPage: React.FC = () => {
     return (
         <div className={ s.loginPage }>
             <Outlet context={ { email, setEmail, sendRecoveryCode, isLoading, UpdatePassword } }/>
-
         </div>
     )
 }
