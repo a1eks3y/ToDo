@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
         <div className={ s.loginPage }>
             <h4>Hello!</h4>
             <h6>Sign in with your credentials or<br/>create a new account</h6>
-            <form onSubmit={ loginHandler }>
+            <form onSubmit={ loginHandler } autoComplete='login-form'>
                 <input
                     value={ email }
                     onChange={ e => setEmail(e.target.value) }

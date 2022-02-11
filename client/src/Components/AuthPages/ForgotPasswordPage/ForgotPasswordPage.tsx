@@ -32,8 +32,8 @@ const ForgotPasswordPage: React.FC = () => {
             navigate('update_password')
         } catch (e: any) {
             dispatch(addMessageActionCreator(id,
-                e && (e.response && e.response.data.message)
-                || e.message
+                (e &&
+                    ((e.response && e.response.data.message) || e.message))
                 || 'Something went wrong. Try again later...',
                 true)
             )

@@ -41,7 +41,7 @@ const RegisterPage: React.FC = () => {
             <h4>Sign up</h4>
             <h6>Create an account to use Organizer<br/>
                 <span className={ s.text_span }>without limits</span>. For free.</h6>
-            <form onSubmit={ registerHandler }>
+            <form onSubmit={ registerHandler } autoComplete='register-form'>
                 <input
                     value={ email }
                     onChange={ e => setEmail(e.target.value) }

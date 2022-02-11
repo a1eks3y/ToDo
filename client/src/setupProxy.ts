@@ -10,8 +10,8 @@
 //     );
 // };
 import express from 'express'
-import {createProxyMiddleware} from  'http-proxy-middleware'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
 const app = express()
-
-app.use('/api', createProxyMiddleware({ target: 'http://localhost:5000/'}))
+if ( process.env.NODE_ENV !== 'production' )
+    app.use('/api', createProxyMiddleware({ target : 'http://localhost:5000/' }))

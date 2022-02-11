@@ -24,7 +24,7 @@ const SendMessage: React.FC = () => {
                 <h4>Reset your password</h4>
                 <h6>Click on button below to do this</h6>
             </div>
-            <form className={ s.form } onSubmit={ onSubmitHandler }>
+            <form autoComplete={'on'} className={ s.form } onSubmit={ onSubmitHandler }>
                 <input
                     value={ email }
                     onChange={ e => setEmail(e.target.value) }

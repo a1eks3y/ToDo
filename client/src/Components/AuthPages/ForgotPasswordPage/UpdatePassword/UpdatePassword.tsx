@@ -38,13 +38,13 @@ const UpdatePassword: React.FC = () => {
         <div>
             { isLoading && <Loader width={ '100%' } height={ '40%' }/> }
             <h4 className={ s.top_text }>Reset your password</h4>
-            <form className={ s.form } onSubmit={ onSubmitHandler }>
+            <form autoComplete='on' className={ s.form } onSubmit={ onSubmitHandler }>
                 <input
                     value={ RecoveryCode }
                     onChange={ e => setRecoveryCode(e.target.value) }
                     disabled={ isLoading }
                     required
-                    autoComplete='current-password'
+                    autoComplete='off'
                     type="text" placeholder='Recovery Code'/>
                 <button className={ s.send_code_btn } type='button' onClick={ sendRecoveryCode }>
                     Send code to "{ email }" again&nbsp;
@@ -59,7 +59,7 @@ const UpdatePassword: React.FC = () => {
                     disabled={ isLoading }
                     required
                     minLength={ 6 }
-                    autoComplete='current-password'
+                    autoComplete='new-password'
                     type="password" placeholder='New password'/>
                 <input
                     value={ password2 }
@@ -67,7 +67,7 @@ const UpdatePassword: React.FC = () => {
                     disabled={ isLoading }
                     required
                     minLength={ 6 }
-                    autoComplete='current-password'
+                    autoComplete='new-password'
                     type="password" placeholder='Confirm new password'/>
                 { !isEqualPassword && <div className={ s.equal_text }>Passwords are not the same</div> }
                 <button
