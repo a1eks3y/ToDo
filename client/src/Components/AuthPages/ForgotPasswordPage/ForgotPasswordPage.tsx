@@ -1,15 +1,15 @@
 import * as React from 'react'
-import s from "./ForgotPasswordPage.module.css";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
+import s from './ForgotPasswordPage.module.css'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import axios from 'axios'
 import {
     addMessageActionCreator,
     willBeDeletedMessageActionCreator
-} from "../../../store/actionsCreator/messageActionCreator";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
-import { MessageAction } from "../../../types/Message";
+} from '../../../store/actionsCreator/messageActionCreator'
+import { useDispatch } from 'react-redux'
+import { Dispatch } from 'redux'
+import { MessageAction } from '../../../types/Message'
 
 const ForgotPasswordPage: React.FC = () => {
     const dispatch = useDispatch<Dispatch<MessageAction>>()
@@ -19,7 +19,7 @@ const ForgotPasswordPage: React.FC = () => {
     const sendRecoveryCode = async () => {
         const id = new Date().getTime()
         try {
-            if(!email.match(/\w+@\w+\.\w+/g)) throw new Error('Wrong email')
+            if ( !email.match(/\w+@\w+\.\w+/g) ) throw new Error('Wrong email')
             setIsLoading(true)
             const res = await axios.post('/api/recover_password/send', { email })
             dispatch(addMessageActionCreator(id,

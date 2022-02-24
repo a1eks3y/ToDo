@@ -1,11 +1,11 @@
-import { Dispatch } from "redux";
-import { AuthActionType, IAuthAction, ILoginAction, IRegisterAction, IUserData, JWTLsI } from "../../types/Auth";
-import axios from "axios";
-import { MessageAction } from "../../types/Message";
+import { Dispatch } from 'redux'
+import { AuthActionType, IAuthAction, ILoginAction, IRegisterAction, IUserData } from '../../types/Auth'
+import axios from 'axios'
+import { MessageAction } from '../../types/Message'
 import {
     addMessageActionCreator,
     willBeDeletedMessageActionCreator
-} from "../actionsCreator/messageActionCreator";
+} from '../actionsCreator/messageActionCreator'
 
 export const AuthRegisterAction = ( payload: IRegisterAction ) => {
     return async ( dispatch: Dispatch<IAuthAction | MessageAction> ) => {
@@ -15,10 +15,7 @@ export const AuthRegisterAction = ( payload: IRegisterAction ) => {
             const res = await axios.post('api/auth/register', payload)
 
             const data = res.data
-            localStorage.removeItem('jwt')
-            localStorage.setItem('jwt', JSON.stringify({
-                jwtToken : data.token
-            }))
+            localStorage.setItem('jwt', data.token)
             dispatch({
                 type : AuthActionType.AUTHORIZATION_SUCCESS, payload : {
                     email : data.email,
@@ -51,10 +48,7 @@ export const AuthLoginFormAction = ( payload: ILoginAction ) => {
             const res = await axios.post('api/auth/login/form', payload)
 
             const data = res.data
-            localStorage.removeItem('jwt')
-            localStorage.setItem('jwt', JSON.stringify({
-                jwtToken : data.token
-            }))
+            localStorage.setItem('jwt', data.token)
             dispatch({
                 type : AuthActionType.AUTHORIZATION_SUCCESS, payload : {
                     username : data.username,
@@ -84,13 +78,11 @@ export const AuthLoginJWTAction = () => {
             dispatch({ type : AuthActionType.AUTHORIZATION })
             const jwt = localStorage.getItem('jwt')
             if ( !jwt ) throw new Error()
-            const { jwtToken } = JSON.parse(jwt) as JWTLsI
-            const res = await axios.post('/api/auth/login/jwt', jwtToken, {
+            const res = await axios.post('/api/auth/login/jwt', jwt, {
                 headers : {
                     Authorization : `Bearer ${ jwt }`
                 }
             })
-            localStorage.removeItem('jwt')
 
             const data: IUserData = res.data
 
@@ -102,9 +94,7 @@ export const AuthLoginJWTAction = () => {
                     emailConfirmed : data.emailConfirmed
                 }
             })
-            localStorage.setItem('jwt', JSON.stringify({
-                jwtToken : data.jwt
-            }))
+            localStorage.setItem('jwt', data.jwt)
         } catch (e: any) {
             if ( e.response.status !== 409 ) localStorage.removeItem('jwt')
             const message = e.response.message || e.response.data.message

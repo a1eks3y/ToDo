@@ -8,8 +8,8 @@ interface ILoader {
 
 const Loader: React.FC<ILoader> = ( { width, height } ) => {
     return (
-        <div className={ style.wrapLoader } style={ {width, height} }>
-            <div className={style.ldsSpinner}>
+        <div className={ style.wrapLoader } style={ { width, height } }>
+            <div className={ style.ldsSpinner }>
                 <div/>
                 <div/>
                 <div/>

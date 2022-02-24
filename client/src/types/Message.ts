@@ -35,5 +35,6 @@ interface MessageActionAdd {
         isBad: boolean
     }
 }
+
 export type MessageAction = MessageActionDeleteOne | MessageActionClear | MessageActionAdd
     | MessageWillBeDeleted

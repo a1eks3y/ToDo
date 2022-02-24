@@ -1,4 +1,4 @@
-import { AuthActionType, IAuthAction, IAuthState } from "../../types/Auth";
+import { AuthActionType, IAuthAction, IAuthState } from '../../types/Auth'
 
 const defaultState = {
     isAuth : false,
@@ -13,7 +13,7 @@ export const AuthReducer = ( state: IAuthState = defaultState, action: IAuthActi
             return {
                 isAuth : true,
                 isLoading : false,
-                userData: {
+                userData : {
                     ...action.payload
                 }
             }

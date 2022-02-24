@@ -1,24 +1,28 @@
 import express, { Router } from 'express'
 import { check, validationResult } from 'express-validator'
-import { UserModel } from "../models/User";
-import * as bcrypt from "bcryptjs"
+import { UserModel } from '../models/User'
+import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 import * as config from 'config'
-import * as shortid from 'shortid';
-import auth from "../middleware/auth";
+import * as shortid from 'shortid'
+import auth from '../middleware/auth'
 import * as nodemailer from 'nodemailer'
-import { EventModel } from "../models/Event";
-import { deleteReqBody, loginReq, registerReq } from "../types/auth.routes";
-import { AuthMwResLocals } from "../types/auth.mw";
+import { deleteReqBody, loginReq, registerReq } from '../types/auth.routes'
+import { AuthMwResLocals } from '../types/auth.mw'
+import { StepModel } from '../models/Step'
+import { TaskModel } from '../models/Task'
+import { ListModel } from '../models/List'
+import { GroupModel } from '../models/Group'
 
 const router = Router()
 const jwtToken: string = config.get('jwtSecret')
+const expiresIn: string = config.get('jwtExpiresIn')
 
 const transporter = nodemailer.createTransport({
     service : 'gmail',
     auth : {
         user : config.get('email'),
-        pass : config.get('password'),
+        pass : config.get('password')
     },
     from : config.get('email')
 })
@@ -42,7 +46,7 @@ router.post('/register',
             const { email, password, username, Timezone } = req.body
             const candidate = await UserModel.findOne({ email : email })
             if ( candidate ) {
-                return res.status(400).json({ message : "User already exist." })
+                return res.status(400).json({ message : 'User already exist.' })
             }
 
             const hashedPassword = await bcrypt.hash(password, 12)
@@ -55,8 +59,9 @@ router.post('/register',
                 Timezone,
                 ConfirmEmail
             })
+
             const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ ConfirmEmail }`
-            await transporter.sendMail({
+            transporter.sendMail({ //deleted await
                 from : config.get('email'),
                 to : email,
                 subject : 'Organizer project - Confirm email',
@@ -65,15 +70,14 @@ router.post('/register',
                             <b><a href="${ confirmEmailUrl }">link</a></b>
                             to confirm email
                         </div>`
-            })
+            }).then(() => res.status(200))
             const token = jwt.sign(
-                { userId : user?.id },
+                { userId : user?._id },
                 jwtToken,
-                { expiresIn : '5h' }
+                { expiresIn }
             )
 
             await user.save()
-
 
             return res.status(201).json(
                 {
@@ -90,6 +94,7 @@ router.post('/register',
         }
     }
 )
+
 router.post('/login/form',
     check('email').normalizeEmail(),
     check('password').exists(),
@@ -97,7 +102,7 @@ router.post('/login/form',
         try {
             const user = await UserModel.findOne({ email : req.body.email })
             if ( !user ) {
-                return res.status(400).json({ message : "User not found." })
+                return res.status(400).json({ message : 'User not found.' })
             }
             const isMatch = await bcrypt.compare(req.body.password, user.password)
             if ( !isMatch ) return res.status(400).json({ message : 'User not found.' })
@@ -114,16 +119,17 @@ router.post('/login/form',
                                 to confirm email
                             </div>`
                 })
-                res.status(409).json(
+                return res.status(409).json(
                     {
                         message : 'You must confirm email. If you can\'t found letter then check the Spam folder...'
                     }
                 )
             }
+
             const token = jwt.sign(
                 { userId : user?.id },
                 jwtToken,
-                { expiresIn : '5h' }
+                { expiresIn }
             )
 
             return res.status(200).json(
@@ -140,9 +146,10 @@ router.post('/login/form',
         }
     }
 )
+
 router.post('/login/jwt', auth,
     async ( _req,
-            res: express.Response<any, AuthMwResLocals> ) => {
+        res: express.Response<any, AuthMwResLocals> ) => {
         try {
             const user = await UserModel.findById(res.locals.userId)
             if ( !user ) return res.status(400).json({ message : 'User not found.' })
@@ -169,11 +176,11 @@ router.post('/login/jwt', auth,
             const token = jwt.sign(
                 { userId : res.locals.userId },
                 jwtToken,
-                { expiresIn : '5h' }
+                { expiresIn }
             )
 
             return res.status(200).json({
-                jwt: token,
+                jwt : token,
                 username : user.username,
                 Timezone : user.Timezone,
                 emailConfirmed : user.ConfirmEmail === null,
@@ -182,12 +189,14 @@ router.post('/login/jwt', auth,
         } catch (e) {
             return res.status(500).json({ message : 'Try again later...' })
         }
-    })
+    }
+)
+
 router.delete('/user',
     auth,
     check('password').exists(),
     async ( req: express.Request<any, any, deleteReqBody>,
-            res: express.Response<any, AuthMwResLocals> ) => {
+        res: express.Response<any, AuthMwResLocals> ) => {
         try {
 
             const user = await UserModel.findById(res.locals.userId)
@@ -196,13 +205,26 @@ router.delete('/user',
             const isMatch = await bcrypt.compare(req.body.password, user.password)
             if ( !isMatch ) return res.status(400).json({ message : 'Wrong password.' })
 
-            const event = await EventModel.find({ owner : res.locals.userId })
+            const steps = await StepModel.find({ owner : res.locals.userId })
+            const tasks = await TaskModel.find({ owner : res.locals.userId })
+            const lists = await ListModel.find({ owner : res.locals.userId })
+            const groups = await GroupModel.find({ owner : res.locals.userId })
 
-            if ( event )
-                for ( const el of event ) {
-                    await el.delete().catch(err => console.log(err))
-                }
+            for ( const step of steps ) {
+                await step.delete()
+            }
 
+            for ( const task of tasks ) {
+                await task.delete()
+            }
+
+            for ( const list of lists ) {
+                await list.delete()
+            }
+
+            for ( const group of groups ) {
+                await group.delete()
+            }
 
             await user.delete()
 

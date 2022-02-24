@@ -1,4 +1,4 @@
-import { MessageAction, MessageActionTypes } from "../../types/Message";
+import { MessageAction, MessageActionTypes } from '../../types/Message'
 
 export const addMessageActionCreator = ( id: number, message: string, isBad: boolean ) => {
     return { type : MessageActionTypes.ADD_MESSAGE, payload : { id, message, isBad } } as MessageAction

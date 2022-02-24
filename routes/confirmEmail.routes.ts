@@ -1,9 +1,9 @@
-import express, { Router } from "express";
-import { UserModel } from "../models/User";
-import auth from "../middleware/auth";
-import * as nodemailer from "nodemailer";
-import * as config from "config";
-import { AuthMwResLocals } from "../types/auth.mw";
+import express, { Router } from 'express'
+import { UserModel } from '../models/User'
+import auth from '../middleware/auth'
+import * as nodemailer from 'nodemailer'
+import * as config from 'config'
+import { AuthMwResLocals } from '../types/auth.mw'
 
 const router = Router()
 
@@ -11,17 +11,17 @@ const transporter = nodemailer.createTransport({
     service : 'gmail',
     auth : {
         user : config.get('email'),
-        pass : config.get('password'),
+        pass : config.get('password')
     },
     from : config.get('email')
 })
 
 router.post('/send', auth,
     async ( _req,
-            res: express.Response<any, AuthMwResLocals> ) => {
+        res: express.Response<any, AuthMwResLocals> ) => {
         try {
             const user = await UserModel.findById(res.locals.userId)
-            if(!user) return res.status(404).json({message: 'User not found.'})
+            if ( !user ) return res.status(404).json({ message : 'User not found.' })
             const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
             await transporter.sendMail({
                 from : config.get('email'),
@@ -33,9 +33,9 @@ router.post('/send', auth,
                             to confirm email
                         </div>`
             })
-            return res.status(200).json({message: 'The message has been sent.'})
+            return res.status(200).json({ message : 'The message has been sent.' })
         } catch (e) {
-            return res.status(501).json({message: 'Something went wrong. Try again later...'})
+            return res.status(501).json({ message : 'Something went wrong. Try again later...' })
         }
     })
 router.get('/:id',
@@ -43,7 +43,7 @@ router.get('/:id',
         try {
             const user = await UserModel.findOneAndUpdate(
                 { ConfirmEmail : req.params.id },
-                { ConfirmEmail : null }
+                { ConfirmEmail : true }
             )
             if ( !user ) return res.status(404).json({ message : 'Page not found' })
 

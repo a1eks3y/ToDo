@@ -1,11 +1,11 @@
 import * as React from 'react'
 import s from './ConfirmEmailPage.module.css'
-import { useEffect, useState } from "react";
-import { useAction } from "../../../hooks/useAction";
-import { useDispatch } from "react-redux";
-import { IAuthAction, IUserData } from "../../../types/Auth";
-import { Dispatch } from "redux";
-import axios from "axios";
+import { useEffect, useState } from 'react'
+import { useAction } from '../../../hooks/useAction'
+import { useDispatch } from 'react-redux'
+import { IAuthAction, IUserData } from '../../../types/Auth'
+import { Dispatch } from 'redux'
+import axios from 'axios'
 
 const ConfirmEmailPage: React.FC = () => {
     const { AuthLogoutActionCreator } = useAction()
@@ -32,8 +32,7 @@ const ConfirmEmailPage: React.FC = () => {
         setTimeout(() => setBtnTimeout(prev => {
             if ( prev > 0 ) {
                 return --prev
-            }
-            else {
+            } else {
                 setIsDisabled(false)
                 return prev
             }

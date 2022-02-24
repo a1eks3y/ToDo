@@ -3,10 +3,10 @@ import s from './Message.module.css'
 import {
     deleteMessageActionCreator,
     willBeDeletedMessageActionCreator
-} from "../../../store/actionsCreator/messageActionCreator";
-import { useDispatch } from "react-redux";
-import { Dispatch, useCallback, useEffect, useState } from "react";
-import { MessageAction } from "../../../types/Message";
+} from '../../../store/actionsCreator/messageActionCreator'
+import { useDispatch } from 'react-redux'
+import { Dispatch, useCallback, useEffect, useState } from 'react'
+import { MessageAction } from '../../../types/Message'
 import img from '../../../image/logo.png'
 
 interface IMessageFC {

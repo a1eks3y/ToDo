@@ -1,14 +1,11 @@
 import * as jwt from 'jsonwebtoken'
 import * as config from 'config'
 import express from 'express'
+import { AuthMwResLocals } from '../types/auth.mw'
 
 const jwtSecret: string = config.get('jwtSecret')
 
-interface authRes extends express.Request {
-    userId: string | jwt.JwtPayload
-}
-
-export default ( req: express.Request, res: express.Response<any, authRes>, next: express.NextFunction ) => {
+export default ( req: express.Request, res: express.Response<any, AuthMwResLocals>, next: express.NextFunction ) => {
     if ( req.method === 'OPTIONS' ) return next()
 
     try {

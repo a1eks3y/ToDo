@@ -51,9 +51,7 @@ export interface IRegisterAction {
     username: string,
     Timezone: number
 }
-export interface JWTLsI {
-    jwtToken: string
-}
+
 export interface IUserData {
     username: string,
     timezone: number,

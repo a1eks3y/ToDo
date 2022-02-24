@@ -5,7 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "start": "ts-node app.ts",
-    "server": "nodemon app.ts --ignore client",
+    "server": "nodemon --exec npx ts-node app.ts",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "prod": "cross-env NODE_ENV=production ts-node app.ts"
@@ -27,6 +27,7 @@
     "@types/jsonwebtoken": "^8.5.6",
     "@types/nodemailer": "^6.4.4",
     "@types/shortid": "0.0.29",
+    "axios": "^0.25.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "compression": "^1.7.4",
@@ -36,7 +37,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.5",
     "nodemailer": "^6.7.2",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "ts-node": "^10.5.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.19",
@@ -45,7 +47,6 @@
     "mongodb": "^4.3.0",
     "node-fetch": "^3.1.0",
     "nodemon": "^2.0.15",
-    "ts-node": "^10.4.0",
     "typescript": "^4.5.5"
   },
   "keywords": []

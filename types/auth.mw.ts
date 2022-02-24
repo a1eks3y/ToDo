@@ -1,3 +1,5 @@
+import { Types } from 'mongoose'
+
 export interface AuthMwResLocals {
-    userId: string
+    userId: Types.ObjectId
 }

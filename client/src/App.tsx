@@ -1,18 +1,18 @@
 import * as React from 'react'
-import { useAction } from "./hooks/useAction";
-import { useCallback, useEffect } from "react";
-import { useTypedSelector } from "./hooks/useTypedSelector";
-import Messages from "./Components/Messages/Messages";
-import Loader from "./Components/Loader/Loader";
-import LoginPage from "./Components/AuthPages/LoginPage/LoginPage";
+import { useAction } from './hooks/useAction'
+import { useCallback, useEffect } from 'react'
+import { useTypedSelector } from './hooks/useTypedSelector'
+import Messages from './Components/Messages/Messages'
+import Loader from './Components/Loader/Loader'
+import LoginPage from './Components/AuthPages/LoginPage/LoginPage'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import AuthPage from "./Components/AuthPages/AuthPage";
-import RegisterPage from "./Components/AuthPages/RegisterPage/RegisterPage";
-import ConfirmEmailPage from "./Components/UserPages/ConfirmEmailPage/ConfirmEmailPage";
-import Content from "./Components/UserPages/Content/Content";
-import ForgotPasswordPage from "./Components/AuthPages/ForgotPasswordPage/ForgotPasswordPage";
-import SendMessage from "./Components/AuthPages/ForgotPasswordPage/SendMessage/SendMessage";
-import UpdatePassword from "./Components/AuthPages/ForgotPasswordPage/UpdatePassword/UpdatePassword";
+import AuthPage from './Components/AuthPages/AuthPage'
+import RegisterPage from './Components/AuthPages/RegisterPage/RegisterPage'
+import ConfirmEmailPage from './Components/UserPages/ConfirmEmailPage/ConfirmEmailPage'
+import Content from './Components/UserPages/Content/Content'
+import ForgotPasswordPage from './Components/AuthPages/ForgotPasswordPage/ForgotPasswordPage'
+import SendMessage from './Components/AuthPages/ForgotPasswordPage/SendMessage/SendMessage'
+import UpdatePassword from './Components/AuthPages/ForgotPasswordPage/UpdatePassword/UpdatePassword'
 
 const App: React.FC = () => {
     const { AuthLoginJWTAction } = useAction()
@@ -36,15 +36,15 @@ const App: React.FC = () => {
                     (!isAuth && !userData
                             ?
                             <>
-                                <Route path='/*' element={ <AuthPage/> }>
-                                    <Route path='login' element={ <LoginPage/> }/>
-                                    <Route path='register' element={ <RegisterPage/> }/>
-                                    <Route path='forgot_password' element={ <ForgotPasswordPage/> }>
-                                        <Route path='send_msg' element={ <SendMessage/> }/>
-                                        <Route path='update_password' element={ <UpdatePassword/> }/>
-                                        <Route path='*' element={ <Navigate to='send_msg'/> }/>
+                                <Route path="/*" element={ <AuthPage/> }>
+                                    <Route path="login" element={ <LoginPage/> }/>
+                                    <Route path="register" element={ <RegisterPage/> }/>
+                                    <Route path="forgot_password" element={ <ForgotPasswordPage/> }>
+                                        <Route path="send_msg" element={ <SendMessage/> }/>
+                                        <Route path="update_password" element={ <UpdatePassword/> }/>
+                                        <Route path="*" element={ <Navigate to="send_msg"/> }/>
                                     </Route>
-                                    <Route path='*' element={ <Navigate to='/login'/> }/>
+                                    <Route path="*" element={ <Navigate to="/login"/> }/>
                                 </Route>
                             </>
 
@@ -53,17 +53,17 @@ const App: React.FC = () => {
                                 userData && !userData.emailConfirmed
                                     ?
                                     <>
-                                        <Route path='/confirm-email' element={ <ConfirmEmailPage/> }/>
-                                        <Route path='*' element={ <Navigate to='/confirm-email'/> }/>
+                                        <Route path="/confirm-email" element={ <ConfirmEmailPage/> }/>
+                                        <Route path="*" element={ <Navigate to="/confirm-email"/> }/>
                                     </>
                                     :
 
                                     <>
-                                        <Route path='/' element={ <Content/> }>
+                                        <Route path="/" element={ <Content/> }>
                                             {/*  Some routes  */ }
-                                            <Route path='*' element={ <Navigate to='/'/> }/>
+                                            <Route path="*" element={ <Navigate to="/"/> }/>
                                         </Route>
-                                        <Route path='*' element={ <Navigate to='/'/> }/>
+                                        <Route path="*" element={ <Navigate to="/"/> }/>
                                     </>
 
                             )

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { useTypedSelector } from "../../hooks/useTypedSelector";
-import Message from "./Message/Message";
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import Message from './Message/Message'
 import style from './Messages.module.css'
 
 const Messages: React.FC = () => {

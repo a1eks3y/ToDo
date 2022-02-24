@@ -1,4 +1,4 @@
-import { IMessage, MessageAction, MessageActionTypes } from "../../types/Message";
+import { IMessage, MessageAction, MessageActionTypes } from '../../types/Message'
 
 const defaultState = null
 
@@ -42,8 +42,7 @@ export const messageReducer = ( state: IMessage = defaultState, action: MessageA
             if ( state ) {
                 const filteredState = [...state.filter(el => el.id !== action.payload)]
                 return filteredState.length > 0 ? filteredState : null
-            }
-            else return null
+            } else return null
         case MessageActionTypes.CLEAR_MESSAGE:
             return null
         default:
