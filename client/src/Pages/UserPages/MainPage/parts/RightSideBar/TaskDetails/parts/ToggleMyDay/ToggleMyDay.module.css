@@ -1,0 +1,67 @@
+.wrapper {
+    padding: 0 10px 0 8px;
+    display: flex;
+    width: 100%;
+    height: 52px;
+    color: #797775;
+    cursor: pointer;
+}
+
+.myDay {
+    cursor: initial;
+    color: #2564cf;
+}
+
+.wrapper:hover {
+    background: #edebe9;
+}
+
+.myDay:hover > .btn_wrapper > .btn:before {
+    content: '\E711';
+}
+
+.text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 0 5px;
+}
+
+.icon {
+    width: 32px;
+    min-height: 100%;
+}
+
+.icon:before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    content: "\E706";
+    width: 100%;
+    min-height: 100%;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.btn {
+    position: relative;
+    width: 28px;
+    height: 32px;
+    margin: 10px 0;
+}
+
+.btn:before {
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    line-height: 12px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: #797775;
+}

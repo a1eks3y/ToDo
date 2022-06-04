@@ -7,7 +7,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { Dispatch, useCallback, useEffect, useState } from 'react'
 import { MessageAction } from '../../../types/Message'
-import img from '../../../image/logo.png'
+import img from '../../../assets/images/logo.png'
 
 interface IMessageFC {
     messageId: number,

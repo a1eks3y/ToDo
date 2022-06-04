@@ -1,0 +1,8 @@
+.pos_absolute{
+    position: absolute;
+    top: 51px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -5;
+}

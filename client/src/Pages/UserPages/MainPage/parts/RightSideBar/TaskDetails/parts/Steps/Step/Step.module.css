@@ -1,0 +1,134 @@
+.wrapper:hover {
+    background-color: #edebe9;
+}
+
+.input:checked + .wrapper {
+    background: #ecf6fd;
+}
+
+.wrapper {
+    border-radius: 1px;
+    display: grid;
+    margin: 0 10px 0 8px;
+    min-height: 42px;
+    grid-template-columns: 32px auto 28px;
+    background: transparent;
+}
+
+.toggleComplete > svg > g > path:last-child {
+    opacity: 0;
+}
+
+.toggleComplete:hover > svg > g > path:last-child {
+    opacity: 1;
+}
+
+.toggleComplete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggleComplete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    fill: #3e69e4;
+}
+
+.icon_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    width: 28px;
+    min-height: 28px;
+    position: relative;
+    cursor: pointer;
+}
+
+.icon:after {
+    min-height: 100%;
+    font-size: 15px;
+    width: 24px;
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deleteIcon:after {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    color: rgb(37, 100, 207);
+    content: "\E711";
+}
+
+.name_wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+}
+
+.find_height_helper {
+    color: #797775;
+    position: relative;
+    opacity: 0;
+    padding: 4px;
+    word-spacing: 0;
+    word-break: break-all;
+    font-family: 'Times new Roman', monospace;
+    line-height: 18px;
+    font-size: 14px;
+    font-weight: 400;
+    min-height: 26px;
+}
+
+.name_textarea {
+    color: #797775;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    word-spacing: 0;
+    word-break: break-all;
+    font-family: 'Times new Roman', monospace;
+    line-height: 18px;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 3px;
+    resize: none;
+    outline: none;
+    border: none;
+    cursor: text;
+    padding: 4px;
+    min-height: 26px;
+}
+
+.step_dragging + .find_height_helper {
+    opacity: 1;
+}
+
+.step_dragging {
+    display: none;
+    cursor: pointer;
+}
+
+.completed:not(:focus-visible) {
+    text-decoration: line-through;
+}

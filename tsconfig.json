@@ -22,7 +22,7 @@
     "target": "ES2021",
     "watch": true,
     "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": true,
+    "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "allowUmdGlobalAccess": false,
     "assumeChangesOnlyAffectDirectDependencies": false,
@@ -65,7 +65,7 @@
     "suppressExcessPropertyErrors": false,
     "suppressImplicitAnyIndexErrors": false,
     "stripInternal": false,
-    "strictFunctionTypes": false,
+    "strictFunctionTypes": true,
     "strictPropertyInitialization": false,
     "traceResolution": false
   },

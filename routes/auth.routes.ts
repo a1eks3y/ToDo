@@ -61,7 +61,7 @@ router.post('/register',
             })
 
             const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ ConfirmEmail }`
-            transporter.sendMail({ //deleted await
+            transporter.sendMail({
                 from : config.get('email'),
                 to : email,
                 subject : 'Organizer project - Confirm email',
@@ -85,7 +85,7 @@ router.post('/register',
                     username,
                     Timezone,
                     message : 'User created.',
-                    emailConfirmed : user.ConfirmEmail === null,
+                    emailConfirmed : user.ConfirmEmail === 'true',
                     email
                 }
             )
@@ -100,6 +100,13 @@ router.post('/login/form',
     check('password').exists(),
     async ( req: express.Request<any, any, loginReq>, res ) => {
         try {
+            const errors = validationResult(req)
+            if ( !errors.isEmpty() ) {
+                return res.status(400).json(
+                    { errors : errors.array(), message : 'Invalid login data.' }
+                )
+            }
+
             const user = await UserModel.findOne({ email : req.body.email })
             if ( !user ) {
                 return res.status(400).json({ message : 'User not found.' })
@@ -107,7 +114,7 @@ router.post('/login/form',
             const isMatch = await bcrypt.compare(req.body.password, user.password)
             if ( !isMatch ) return res.status(400).json({ message : 'User not found.' })
 
-            if ( typeof user.ConfirmEmail === 'string' ) {
+            if ( user.ConfirmEmail && typeof JSON.parse(user.ConfirmEmail) == 'string' ) {
                 const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
                 await transporter.sendMail({
                     from : config.get('email'),
@@ -119,11 +126,6 @@ router.post('/login/form',
                                 to confirm email
                             </div>`
                 })
-                return res.status(409).json(
-                    {
-                        message : 'You must confirm email. If you can\'t found letter then check the Spam folder...'
-                    }
-                )
             }
 
             const token = jwt.sign(
@@ -137,7 +139,7 @@ router.post('/login/form',
                     token,
                     Timezone : user.Timezone,
                     username : user.username,
-                    emailConfirmed : user.ConfirmEmail === null,
+                    emailConfirmed : user.ConfirmEmail === 'true',
                     email : user.email
                 }
             )
@@ -154,7 +156,7 @@ router.post('/login/jwt', auth,
             const user = await UserModel.findById(res.locals.userId)
             if ( !user ) return res.status(400).json({ message : 'User not found.' })
 
-            if ( typeof user.ConfirmEmail == 'string' ) {
+            if ( user.ConfirmEmail && typeof JSON.parse(user.ConfirmEmail) == 'string' ) {
                 const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
                 await transporter.sendMail({
                     from : config.get('email'),
@@ -166,12 +168,6 @@ router.post('/login/jwt', auth,
                                 to confirm email
                             </div>`
                 })
-
-                return res.status(409).json(
-                    {
-                        message : 'You must confirm email. If you can\'t found letter then check the Spam folder...'
-                    }
-                )
             }
             const token = jwt.sign(
                 { userId : res.locals.userId },
@@ -180,10 +176,10 @@ router.post('/login/jwt', auth,
             )
 
             return res.status(200).json({
-                jwt : token,
+                token,
                 username : user.username,
                 Timezone : user.Timezone,
-                emailConfirmed : user.ConfirmEmail === null,
+                emailConfirmed : user.ConfirmEmail === 'true',
                 email : user.email
             })
         } catch (e) {
@@ -198,6 +194,12 @@ router.delete('/user',
     async ( req: express.Request<any, any, deleteReqBody>,
         res: express.Response<any, AuthMwResLocals> ) => {
         try {
+            const errors = validationResult(req)
+            if ( !errors.isEmpty() ) {
+                return res.status(400).json(
+                    { errors : errors.array(), message : 'Invalid data.' }
+                )
+            }
 
             const user = await UserModel.findById(res.locals.userId)
             if ( !user ) return res.status(400).json({ message : 'User not found.' })

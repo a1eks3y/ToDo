@@ -2,37 +2,39 @@ export interface IAuthState {
     userData?: {
         timezone: number,
         username: string,
-        emailConfirmed: boolean
+        emailConfirmed: boolean,
+        email: string
     }
     isAuth: boolean,
     isLoading: boolean
 }
 
 export enum AuthActionType {
-    AUTHORIZATION = 'AUTHORIZATION',
-    AUTHORIZATION_SUCCESS = 'AUTHORIZATION_SUCCESS',
-    AUTHORIZATION_ERROR = 'AUTHORIZATION_ERROR',
-    LOGOUT = 'LOGOUT'
+    AUTHORIZATION = '@auth/AUTHORIZATION',
+    AUTHORIZATION_SUCCESS = '@auth/AUTHORIZATION_SUCCESS',
+    AUTHORIZATION_ERROR = '@auth/AUTHORIZATION_ERROR',
+    LOGOUT = '@auth/LOGOUT'
 }
 
-interface AuthActionAuthorization {
+export interface AuthActionAuthorization {
     type: AuthActionType.AUTHORIZATION
 }
 
-interface AuthActionAuthorizationSuccess {
+export interface AuthActionAuthorizationSuccess {
     type: AuthActionType.AUTHORIZATION_SUCCESS
     payload: {
         timezone: number,
         username: string,
-        emailConfirmed: boolean
+        emailConfirmed: boolean,
+        email: string
     }
 }
 
-interface AuthActionError {
+export interface AuthActionError {
     type: AuthActionType.AUTHORIZATION_ERROR
 }
 
-interface AuthActionLogout {
+export interface AuthActionLogout {
     type: AuthActionType.LOGOUT
 }
 
@@ -54,8 +56,13 @@ export interface IRegisterAction {
 
 export interface IUserData {
     username: string,
-    timezone: number,
-    jwt: string,
+    Timezone: number,
+    token: string,
     email: string,
     emailConfirmed: boolean
 }
+
+export interface IUserDataRegister extends IUserData {
+    message: string
+}
+

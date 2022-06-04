@@ -1,0 +1,34 @@
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #A19F9D;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.clear-btn-style:focus-visible {
+    outline: none;
+}
+
+.clear-btn-style:focus {
+    background: initial;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

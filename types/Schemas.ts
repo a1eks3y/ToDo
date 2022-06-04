@@ -7,7 +7,7 @@ export interface UserSchema {
     password: string,
     RecoveryCode: string | null,
     Timezone: number,
-    ConfirmEmail: boolean | null
+    ConfirmEmail: string | null
 }
 
 export interface ListSchema {
@@ -18,26 +18,39 @@ export interface ListSchema {
     position: number
 }
 
+export enum TaskCategories {
+    BLUE = 'Blue',
+    RED = 'Red',
+    ORANGE = 'Orange',
+    GREEN = 'Green',
+    YELLOW = 'Yellow',
+    PURPLE = 'Purple'
+}
+
+export type Category = TaskCategories.BLUE | TaskCategories.GREEN | TaskCategories.RED |
+    TaskCategories.YELLOW | TaskCategories.ORANGE | TaskCategories.PURPLE
 export interface TaskSchema {
     _id: Types.ObjectId,
     name: string,
-    createdAt: Date,
-    endAt?: Date,
-    categories?: string[],
-    isFavourites: boolean,
-    description?: string,
-    isCompleted: boolean,
-    forList: Types.ObjectId,
+    createdAt: [number, number, number, number, number, number], // [year, month, day, hour, min, sec]
+    endAt?: [number, number, number] | undefined, // [year, month, day]
+    categories: Category[],
+    myDay?: number | null,
+    favourites?: number | null,
+    description: string,
+    completedAt: [number, number, number, number, number, number] | never[], // [year, month, day, hour, min, sec]
+    forList?: Types.ObjectId,
     owner: Types.ObjectId,
-    position: number
+    position: number | null
 }
 
 export interface StepSchema {
     _id: Types.ObjectId,
     name: string,
     isCompleted: boolean,
-    Task: Types.ObjectId,
-    position: number
+    forTask: Types.ObjectId,
+    position: number,
+    owner: Types.ObjectId,
 }
 
 export interface GroupSchema {

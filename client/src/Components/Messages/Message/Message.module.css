@@ -1,27 +1,31 @@
-.message{
+.message {
     display: flex;
     padding: 1px 1px 1px 10px;
     align-items: center;
     width: 300px;
-    height: 8.8vh;
+    height: 80px;
     background: #F1F4F6;
     border-radius: 3px;
     opacity: 1;
     transform: translateX(0);
     margin-top: 5px;
 }
-.badNews{
+
+.badNews {
     border-left: 4px solid #ff0000;
 }
-.goodNews{
+
+.goodNews {
     border-left: 4px solid #41ff00;
 }
-.btn{
+
+.btn {
     position: absolute;
     top: 0;
     right: 0;
 }
-.btn::after, .btn::before{
+
+.btn::after, .btn::before {
     cursor: pointer;
     content: ' ';
     position: absolute;
@@ -31,42 +35,50 @@
     height: 1px;
     background: gray;
 }
+
 .btn:hover:before,
-.btn:hover:after{
+.btn:hover:after {
     background: red;
 }
-.btn::after{
+
+.btn::after {
     transform: rotate(45deg);
 }
-.btn::before{
+
+.btn::before {
     transform: rotate(-45deg);
 }
-.img{
+
+.img {
     margin-left: 1px;
     color: black;
     width: 40px;
     margin-right: 8px;
 }
-.firstRender{
+
+.firstRender {
     transform: translateX(314px);
     opacity: 0;
-    animation: 1s load ease-out ;
+    animation: 1s load ease-out;
     animation-fill-mode: forwards;
 }
+
 @keyframes load {
     100% {
         transform: translateX(0);
         opacity: 1;
     }
 }
-.delete{
+
+.delete {
     transform: translateX(0);
     opacity: 1;
     animation: 1s delete ease-out;
     animation-fill-mode: forwards;
 }
+
 @keyframes delete {
-    100%{
+    100% {
         transform: translateX(314px);
         opacity: 0;
     }

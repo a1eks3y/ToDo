@@ -1,0 +1,123 @@
+.wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    /*border-radius: 5px;*/
+    display: grid;
+    width: 100%;
+    padding: 0 10px 2px;
+    min-height: 52px;
+    grid-template-columns: 28px auto 28px;
+    background: white;
+}
+
+.toggleComplete > svg > g > path:last-child {
+    opacity: 0;
+}
+
+.toggleComplete:hover > svg > g > path:last-child {
+    opacity: 1;
+}
+
+.toggleComplete, .toggleFavourite {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggleComplete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    fill: #3e69e4;
+}
+
+.icon {
+    position: relative;
+}
+
+.icon:after {
+    font-size: 15px;
+    width: 24px;
+    height: 24px;
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.starIcon:after {
+    color: rgb(121, 119, 117);
+    content: '\E734';
+}
+
+.starIcon:hover:after {
+    color: rgba(0, 0, 0);
+}
+
+.ActiveStarIcon:after {
+    color: rgb(37, 100, 207);
+    content: "\E735";
+}
+
+.name_wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.name{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+}
+
+.find_height_helper {
+    position: relative;
+    z-index: -99999;
+    opacity: 0;
+    padding: 4px;
+    word-spacing: 0;
+    word-break: break-all;
+    font-family: 'Times new Roman', monospace;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 400;
+}
+.name_textarea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    word-spacing: 0;
+    word-break: break-all;
+    font-family: 'Times new Roman', monospace;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 3px;
+    resize: none;
+    outline: none;
+    border: none;
+    cursor: text;
+    padding: 4px;
+    min-height: 28px;
+    color: rgb(50, 49, 48);
+}
+
+.name_textarea:hover:not(:focus-visible) {
+    background: #edebe9;
+    box-shadow: inset 0 0 0 1px #edebe9;
+}
+
+.name_textarea:focus-visible {
+    padding: 3px;
+    border: 1px solid black;
+}
+
+.completed:not(:focus-visible) {
+    text-decoration: line-through;
+}

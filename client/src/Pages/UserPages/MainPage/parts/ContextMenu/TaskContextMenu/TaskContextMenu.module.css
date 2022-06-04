@@ -1,0 +1,68 @@
+.wrapper {
+    position: absolute;
+    z-index: 6;
+    background: white;
+    box-shadow: 0 0 55px 0 rgb(134, 149, 161);
+    width: 230px;
+    height: auto;
+    padding: 6px 0;
+}
+
+.wrapper > ul {
+    margin: 0 !important;
+}
+
+.wrapper > ul > li {
+    cursor: pointer;
+}
+
+.wrapper > ul > li:hover {
+    background-color: #edebe9;
+}
+
+.icon {
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    width: 24px;
+    height: 24px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.icon:before {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconSunny:before {
+    content: '\E706';
+}
+
+.favouriteStar:before {
+    content: '\E734';
+}
+
+.iconCalendar:before {
+    content: '\E787';
+}
+
+.iconDelete:before {
+    content: '\E74D';
+}
+
+.copyIcon:before {
+    content: '\E8C8';
+}
+
+.separator {
+    width: 100%;
+    margin: 6px 0;
+    height: 0;
+    border-bottom: 1px solid #edebe9;
+    background: #edebe9;
+}

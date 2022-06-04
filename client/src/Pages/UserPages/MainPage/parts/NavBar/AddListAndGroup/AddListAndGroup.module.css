@@ -1,0 +1,106 @@
+.wrapper {
+    height: 36px;
+    width: 100% !important;
+    display: flex;
+    line-height: 0;
+}
+
+.icon_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0 4px;
+}
+
+.addIcon:before {
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    content: "\E948";
+    margin-top: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconSize_24 {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    color: #2564cf !important;
+}
+
+.input {
+    width: 100%;
+    height: 100% !important;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input, .input:focus {
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+.input::placeholder {
+    color: #2564cf;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input, .input:focus::placeholder {
+    color: rgb(50, 49, 48) !important;
+}
+
+.addGroup_wrapper, .addGroup_wrapper > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 36px;
+    position: relative;
+}
+
+.addGroup_wrapper > button:focus {
+    background: none;
+}
+/*.group_text_help{*/
+/*    display: none;*/
+/*    background: white;*/
+/*}*/
+/*.addGroup_wrapper:hover > .group_text_help{*/
+/*    font-size: 12px;*/
+/*    font-weight: 500;*/
+/*    display: flex;*/
+/*    width: max-content;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    padding: 12px;*/
+/*    position: absolute;*/
+/*    margin-bottom: 75px;*/
+/*    background: white;*/
+/*    box-shadow: 0 0 13px 0 gray;*/
+/*}*/
+/*.group_text_help:hover{*/
+/*    display: none !important;*/
+/*}*/
+/*.group_text_help:after{*/
+/*    background: white;*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    width: 12px;*/
+/*    height: 12px;*/
+/*    box-shadow: 5px 5px 13px 0 gray;*/
+/*    left: calc(50% - 6px);*/
+/*    bottom: -6px;*/
+/*    z-index: 555;*/
+/*    transform: rotate(45deg);*/
+/*}*/

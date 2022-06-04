@@ -13,14 +13,6 @@ const PORT: number = config.get('port') || 5000
 const mongoUri: string = config.get('mongoUri')
 
 app.use(compression())
-if ( process.env.NODE_ENV === 'production' ) {
-    app.use(express.static('client/build'))
-    app.get('*', ( _req, res ) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-    })
-} else {
-    app.use(express.static('client'))
-}
 
 app.use(express.json())
 app.use(express.urlencoded({ extended : true }))
@@ -28,6 +20,15 @@ app.use('/api/auth', authRoutes)
 app.use('/api/confirmEmail', confirmEmailRoutes)
 app.use('/api/recover_password', changePasswordRoutes)
 app.use('/api/for_authorized_users', for_authorized_usersRoutes)
+
+if ( process.env.NODE_ENV === 'production' ) {
+    app.use(express.static(path.resolve(__dirname, 'client/build')))
+    app.get('*', ( _req, res ) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+} else {
+    app.use(express.static(path.resolve(__dirname, 'client')))
+}
 
 async function start(): Promise<void> {
     await mongoose.connect(mongoUri)

@@ -6,11 +6,11 @@ export type IMessage = null | {
 }[]
 
 export enum MessageActionTypes {
-    ADD_MESSAGE = 'ADD_MESSAGE',
-    WILL_BE_DELETED = 'WILL_BE_DELETED',
-    DELETE_MESSAGE = 'DELETE_MESSAGE',
-    CLEAR_MESSAGE = 'CLEAR_MESSAGE',
-    IS_NEW_TO_FALSE = 'IS_NEW_TO_FALSE'
+    ADD_MESSAGE = '@message/ADD_MESSAGE',
+    WILL_BE_DELETED = '@message/WILL_BE_DELETED',
+    DELETE_MESSAGE = '@message/DELETE_MESSAGE',
+    CLEAR_MESSAGE = '@message/CLEAR_MESSAGE',
+    IS_NEW_TO_FALSE = '@message/IS_NEW_TO_FALSE'
 }
 
 interface MessageWillBeDeleted {

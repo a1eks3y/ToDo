@@ -1,0 +1,220 @@
+.categories_wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 8px;
+}
+
+.categories_wrapper:not(.menu_opened):hover {
+    background: #edebe9;
+}
+
+.menu_opened {
+    background: #ecf6fd;
+}
+
+.categoryIcon {
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    height: auto;
+    padding-top: 16px;
+}
+
+.categories {
+    display: flex;
+    flex: 1 1 0;
+    flex-wrap: wrap;
+    align-items: center;
+    width: available;
+    height: auto;
+    padding: 8px;
+    position: relative;
+}
+
+.category {
+    display: flex;
+    border-radius: 3px;
+    height: 22px;
+    margin: 4px;
+    width: fit-content;
+    border: 1px solid var(--second-clr);
+    background: var(--second-clr);
+    color: var(--clr);
+}
+
+.category:hover {
+    border-color: var(--clr);
+}
+
+.text {
+    cursor: default;
+    display: flex;
+    align-items: center;
+    height: auto;
+    padding: 0 6px 2px;
+    max-width: 140px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: "Segoe UI Semibold", sans-serif;
+}
+
+.text:hover, .deleteIcon:hover {
+    background: var(--clr);
+}
+
+.text:hover {
+    color: var(--second-clr);
+}
+
+.deleteIcon {
+    display: flex;
+    align-items: center;
+    width: 22px;
+    padding: 0 7px;
+    cursor: pointer;
+}
+
+.deleteIcon:hover > svg {
+    fill: var(--second-clr);
+}
+
+.blue_category {
+    --clr: rgb(0, 120, 153);
+    --second-clr: rgb(224, 247, 253);
+}
+
+.yellow_category {
+    --clr: rgb(122, 116, 0);
+    --second-clr: rgb(255, 253, 224);
+}
+
+.red_category {
+    --clr: rgb(208, 27, 42);
+    --second-clr: rgb(252, 233, 234);
+}
+
+.purple_category {
+    --clr: rgb(125, 87, 178);
+    --second-clr: rgb(240, 236, 246);
+}
+
+.orange_category {
+    --clr: rgb(163, 90, 0);
+    --second-clr: rgb(255, 241, 224);
+}
+
+.green_category {
+    --clr: rgb(37, 126, 32);
+    --second-clr: rgb(233, 249, 232);
+}
+
+.search_category, .search_category:focus {
+    border: none !important;
+    margin: 2px !important;
+    padding: 2px 0 !important;
+    box-shadow: none !important;
+}
+
+.search_category::placeholder, .search_category {
+    font-family: "Segoe UI Semibold", sans-serif;
+    font-size: 14px !important;
+    font-weight: 500;
+    height: 19px !important;
+}
+
+.search_category::placeholder {
+    color: #797775 !important;
+}
+
+.search_category {
+    color: #323130;
+}
+
+.menu {
+    overflow-y: auto;
+    position: absolute;
+    margin: 8px 0;
+    width: 95%;
+    border-radius: 4px;
+    padding: 4px 0;
+    background: white;
+    box-shadow: rgb(0 0 0 / 13%) 0 3px 7px;
+}
+
+.menu_item {
+    display: flex;
+    width: auto;
+    height: 38px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.menu_item:not(.active_menu_item, .target_menu_item):hover {
+    background: #ecf6fd;
+}
+
+.active_menu_item {
+    background: rgb(236, 246, 253);
+}
+
+.target_menu_item {
+    background: rgb(237, 235, 233);
+}
+
+.menu_icon {
+    margin: 5px 13px 5px 0;
+    width: 10px;
+    height: 10px !important;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.yellow_circle {
+    background: rgb(255, 253, 224);
+    border-color: rgb(255, 247, 102);
+}
+
+.red_circle {
+    background: rgb(252, 233, 234);
+    border-color: rgb(241, 145, 154);
+}
+
+.purple_circle {
+    background: rgb(240, 236, 246);
+    border-color: rgb(183, 162, 212);
+}
+
+.orange_circle {
+    background: rgb(255, 241, 224);
+    border-color: rgb(255, 186, 102);
+}
+
+.green_circle {
+    background: rgb(233, 249, 232);
+    border-color: rgb(145, 227, 141);
+}
+
+.blue_circle {
+    background: rgb(224, 247, 253);
+    border-color: rgb(102, 215, 247);
+}
+
+.menu_name {
+    font-family: "Segoe UI Semibold", sans-serif;
+    margin: 2px auto 2px 0;
+    line-height: 16px;
+    color: #323130;
+    max-width: 190px;
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.active_icon {
+    margin-top: 2px;
+}

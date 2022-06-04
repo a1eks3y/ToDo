@@ -1,0 +1,58 @@
+.hint_wrapper{
+    animation: cubic-bezier(0.65, 0, 0.35, 1) .6s show-up;
+}
+
+.hint{
+    font: 500 12px "Times New Roman";
+    position: fixed;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    padding: 8px;
+    background: white;
+    box-shadow: 0 0 13px 0 gray;
+    color: black;
+    font-style: normal;
+}
+.hint:not(.custom_style){
+    transform: translateX(calc(-50% + 20px));
+}
+.triangle{
+    display: block;
+    position: absolute;
+    left: calc(50% - 8px);
+    width: 16px;
+    height: 16px !important;
+    border: 8px solid transparent;
+}
+.triangle_top{
+    border-bottom: 10px solid white;
+}
+.triangle_bottom{
+    border-top: 10px solid white;
+}
+.triangle:before{
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    box-shadow: 0 0 13px 0 gray;
+    transform: rotate(45deg);
+}
+@keyframes show-up {
+    0%{
+        z-index: 2;
+        opacity: 0;
+    }
+    10%{
+        z-index: 2;
+        opacity: 0;
+    }
+    100%{
+        z-index: 2;
+        opacity: 1;
+    }
+}

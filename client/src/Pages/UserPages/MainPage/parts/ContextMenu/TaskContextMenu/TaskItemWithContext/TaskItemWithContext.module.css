@@ -1,0 +1,105 @@
+.wrapper {
+    width: 224px;
+    height: 38px;
+    padding: 0 4px;
+    display: grid;
+    grid-template-columns: 38px auto 12px;
+    position: relative;
+}
+
+.wrapper > div {
+    display: flex;
+    align-items: center;
+}
+
+.wrapper > div:nth-child(odd) {
+    justify-content: center;
+}
+
+.iconWrapper > svg, .iconWrapper > i, .iconWrapper > i:before {
+    width: 24px;
+    height: 24px;
+}
+
+.arrowIcon {
+    width: 12px;
+    height: 36px;
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 36px;
+}
+
+.arrowIcon:before {
+    content: '\E76C';
+    width: 12px;
+    height: 36px;
+}
+
+.icon {
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    width: 24px;
+    height: 24px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.icon:before {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconHome:before {
+    content: '\E80F';
+}
+
+.iconList:before {
+    content: '\E8FD';
+}
+
+.lists {
+    z-index: 3;
+    padding: 4px 0;
+    position: absolute;
+    background: white;
+    box-shadow: 0 0 55px 0 rgb(134, 149, 161);
+}
+
+.right_lists {
+    left: calc(100% + 6px);
+}
+
+.left_lists {
+    right: 100%;
+}
+
+.top_lists {
+    bottom: 38px;
+}
+
+.bottom_lists {
+    top: 38px;
+}
+
+.oneList {
+    top: -4px;
+}
+
+.evenLists {
+    top: calc(-150% - 4px);
+}
+
+.oddLists {
+    top: -50%;
+}
+
+.lists > li:hover {
+    background: #edebe9;
+}

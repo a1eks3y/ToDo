@@ -1,28 +1,38 @@
 import * as React from 'react'
-import { useAction } from './hooks/useAction'
 import { useCallback, useEffect } from 'react'
+import './App.css'
+import { useAction } from './hooks/useAction'
 import { useTypedSelector } from './hooks/useTypedSelector'
 import Messages from './Components/Messages/Messages'
 import Loader from './Components/Loader/Loader'
-import LoginPage from './Components/AuthPages/LoginPage/LoginPage'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import AuthPage from './Components/AuthPages/AuthPage'
-import RegisterPage from './Components/AuthPages/RegisterPage/RegisterPage'
-import ConfirmEmailPage from './Components/UserPages/ConfirmEmailPage/ConfirmEmailPage'
-import Content from './Components/UserPages/Content/Content'
-import ForgotPasswordPage from './Components/AuthPages/ForgotPasswordPage/ForgotPasswordPage'
-import SendMessage from './Components/AuthPages/ForgotPasswordPage/SendMessage/SendMessage'
-import UpdatePassword from './Components/AuthPages/ForgotPasswordPage/UpdatePassword/UpdatePassword'
+import LoginPage from './Pages/AuthPages/LoginPage/LoginPage'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import AuthPagesWrapper from './Pages/AuthPages/AuthPagesWrapper'
+import RegisterPage from './Pages/AuthPages/RegisterPage/RegisterPage'
+import ConfirmEmailPage from './Pages/UserPages/ConfirmEmailPage/ConfirmEmailPage'
+import MainPage from './Pages/UserPages/MainPage/MainPage'
+import ForgotPasswordPages from './Pages/AuthPages/ForgotPasswordPages/ForgotPasswordPages'
+import SendMessage from './Pages/AuthPages/ForgotPasswordPages/SendMessage/SendMessage'
+import UpdatePasswordPage from './Pages/AuthPages/ForgotPasswordPages/UpdatePassword/UpdatePasswordPage'
+import MyDay from './Pages/UserPages/MainPage/parts/Main/MyDay/MyDay'
+import Favourites from './Pages/UserPages/MainPage/parts/Main/Favourites/Favourites'
+import Completed from './Pages/UserPages/MainPage/parts/Main/Completed/Completed'
+import All from './Pages/UserPages/MainPage/parts/Main/All/All'
+import Planned from './Pages/UserPages/MainPage/parts/Main/Planned/Planned'
+import Tasks from './Pages/UserPages/MainPage/parts/Main/Tasks/Tasks'
+import CustomList from './Pages/UserPages/MainPage/parts/Main/CustomList/CustomList'
 
 const App: React.FC = () => {
     const { AuthLoginJWTAction } = useAction()
     const { isAuth, isLoading, userData } = useTypedSelector(state => state.auth)
+    const { lists } = useTypedSelector(state => state.todoUserData)
     const LoginJWT = useCallback(() => {
-        if ( localStorage.getItem('jwt') && !isAuth && !isLoading ) try {
-            AuthLoginJWTAction()
-        } catch (e) {
-            localStorage.removeItem('jwt')
-        }
+        if ( localStorage.getItem('jwt') && !isAuth && !isLoading )
+            try {
+                AuthLoginJWTAction()
+            } catch (e) {
+                localStorage.removeItem('jwt')
+            }
     }, [AuthLoginJWTAction, isAuth, isLoading])
     useEffect(() => {
         LoginJWT()
@@ -32,54 +42,55 @@ const App: React.FC = () => {
             <Messages/>
             { isLoading && <Loader width={ '100vw' } height={ '100vh' }/> }
             <Routes>
+                { isLoading &&
+                    <Route path="/login" element={ null }/> } {/*fix error - No routes matched location "/login"*/ }
                 { !isLoading &&
                     (!isAuth && !userData
                             ?
                             <>
-                                <Route path="/*" element={ <AuthPage/> }>
+                                <Route path="/*" element={ <AuthPagesWrapper/> }>
                                     <Route path="login" element={ <LoginPage/> }/>
                                     <Route path="register" element={ <RegisterPage/> }/>
-                                    <Route path="forgot_password" element={ <ForgotPasswordPage/> }>
+                                    <Route path="forgot_password" element={ <ForgotPasswordPages/> }>
                                         <Route path="send_msg" element={ <SendMessage/> }/>
-                                        <Route path="update_password" element={ <UpdatePassword/> }/>
+                                        <Route path="update_password" element={ <UpdatePasswordPage/> }/>
                                         <Route path="*" element={ <Navigate to="send_msg"/> }/>
                                     </Route>
-                                    <Route path="*" element={ <Navigate to="/login"/> }/>
+                                    <Route path="*" element={ <Navigate to="login"/> }/>
                                 </Route>
                             </>
-
                             :
                             (
                                 userData && !userData.emailConfirmed
                                     ?
                                     <>
                                         <Route path="/confirm-email" element={ <ConfirmEmailPage/> }/>
-                                        <Route path="*" element={ <Navigate to="/confirm-email"/> }/>
+                                        <Route path="*" element={ <Navigate replace to="/confirm-email"/> }/>
                                     </>
                                     :
-
                                     <>
-                                        <Route path="/" element={ <Content/> }>
-                                            {/*  Some routes  */ }
-                                            <Route path="*" element={ <Navigate to="/"/> }/>
+                                        <Route path="/*" element={ <MainPage/> }>
+                                            <Route path="MyDay"
+                                                   element={ <MyDay/> }/>
+                                            <Route path="Favourites" element={ <Favourites/> }/>
+                                            <Route path="All" element={ <All/> }/>
+                                            <Route path="Completed" element={ <Completed/> }/>
+                                            <Route path="Planned" element={ <Planned/> }/>
+                                            <Route path="Tasks" element={ <Tasks/> }/>
+                                            {
+                                                lists.map(( { _id, name } ) => (
+                                                    <Route key={ _id }
+                                                           path={ _id }
+                                                           element={ <CustomList name={ name } _id={ _id }/> }/>
+                                                ))
+                                            }
+                                            <Route path="*" element={ <Navigate to="MyDay"/> }/>
                                         </Route>
-                                        <Route path="*" element={ <Navigate to="/"/> }/>
                                     </>
-
                             )
                     )
                 }
-
             </Routes>
-
-            {/*<button className='btn' onClick={ () => AuthRegisterAction({*/ }
-            {/*    email : 'alesha1shvets@yandex.ru',*/ }
-            {/*    Timezone : 3,*/ }
-            {/*    password : '123456',*/ }
-            {/*    username : 'alesha'*/ }
-            {/*}) }>*/ }
-            {/*    Create acc*/ }
-            {/*</button>*/ }
         </>
     )
 }

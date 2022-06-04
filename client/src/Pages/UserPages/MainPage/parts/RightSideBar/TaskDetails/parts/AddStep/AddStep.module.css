@@ -1,0 +1,77 @@
+.wrapper {
+    height: 42px;
+    padding: 0 6px 2px 7px;
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    line-height: 0;
+    position: relative;
+}
+
+.icon {
+    cursor: pointer;
+    min-width: 32px;
+    padding: 0 0 0 2px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon svg {
+    min-width: 24px;
+    height: 24px;
+}
+
+.plusIcon:before {
+    font-family: "Fabric MDL2 Assets", ui-monospace;
+    font-style: normal;
+    content: "\E948";
+    height: 16px;
+    font-size: 12px;
+    width: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1px;
+}
+
+.input, .input:focus {
+    margin: 0 0 0 5px !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+.input {
+    flex-grow: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 100% !important;
+    font-family: "Times New Roman", sans-serif;
+    font-weight: 500;
+}
+
+.input::placeholder {
+    color: #2564cf;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.red_input::placeholder {
+    color: rgb(210, 83, 78);
+}
+
+.input, .input:focus::placeholder {
+    color: rgb(50, 49, 48) !important;
+}
+
+.add_step {
+    cursor: pointer;
+    height: 100%;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #3459c1;
+}
