@@ -4,13 +4,7 @@
   "description": "mern",
   "main": "app.ts",
   "scripts": {
-    "start": "NODE_ENV=production ts-node app.ts",
-    "server": "nodemon --exec npx ts-node app.ts",
-    "client": "npm run start --prefix client",
-    "build": "npm run build --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "prod": "cross-env NODE_ENV=production ts-node app.ts",
-    "build&prod_test": "concurrently \"npm run build\" \"npm run prod\""
+    "start": "ts-node app.ts"
   },
   "repository": {
     "type": "git",

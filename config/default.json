@@ -1,0 +1,9 @@
+{
+  "port": 5000,
+  "baseUrl": "http://localhost:5000",
+  "mongoUri": "mongodb+srv://yhrage524:hellomyonesfriendS1@todo.zp7v9.mongodb.net/ToDo?retryWrites=true&w=majority",
+  "jwtSecret": "aleksey2006",
+  "jwtExpiresIn": "5d",
+  "email": "t0dopr0j3ct@gmail.com",
+  "password": "dcxjvlswkejfklsmdx#asd(9fk"
+}

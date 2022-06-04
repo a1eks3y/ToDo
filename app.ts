@@ -21,14 +21,10 @@ app.use('/api/confirmEmail', confirmEmailRoutes)
 app.use('/api/recover_password', changePasswordRoutes)
 app.use('/api/for_authorized_users', for_authorized_usersRoutes)
 
-if ( process.env.NODE_ENV === 'production' ) {
-    app.use(express.static(path.resolve(__dirname, 'client/build')))
-    app.get('*', ( _req, res ) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-    })
-} else {
-    app.use(express.static(path.resolve(__dirname, 'client')))
-}
+app.use(express.static(path.resolve(__dirname, 'client/')))
+app.get('*', ( _req, res ) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'index.html'))
+})
 
 async function start(): Promise<void> {
     await mongoose.connect(mongoUri)
