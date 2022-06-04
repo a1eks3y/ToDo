@@ -4,7 +4,7 @@
   "description": "mern",
   "main": "app.ts",
   "scripts": {
-    "start": "cross-env NODE_ENV=production ts-node app.ts"
+    "start": "ts-node app.ts"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,6 @@
   "devDependencies": {
     "@types/node": "^16.11.19",
     "concurrently": "^7.0.0",
-    "cross-env": "^7.0.3",
     "mongodb": "^4.3.0",
     "node-fetch": "^3.2.3",
     "nodemon": "^2.0.15",
