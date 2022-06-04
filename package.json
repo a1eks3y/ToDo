@@ -4,7 +4,7 @@
   "description": "mern",
   "main": "app.ts",
   "scripts": {
-    "start": "ts-node app.ts",
+    "start": "NODE_ENV=production ts-node app.ts",
     "server": "nodemon --exec npx ts-node app.ts",
     "client": "npm run start --prefix client",
     "build": "npm run build --prefix client",
@@ -38,6 +38,7 @@
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.5",
+    "node": "^16.13.2",
     "nodemailer": "^6.7.2",
     "shortid": "^2.2.16",
     "ts-node": "^10.5.0"
