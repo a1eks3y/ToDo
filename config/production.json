@@ -1,6 +1,5 @@
 {
-  "port": 5000,
-  "baseUrl": "http://localhost:5000",
+  "baseUrl": "https://todopr0ject.herokuapp.com/",
   "mongoUri": "mongodb+srv://yhrage524:hellomyonesfriendS1@todo.zp7v9.mongodb.net/ToDo?retryWrites=true&w=majority",
   "jwtSecret": "aleksey2006",
   "jwtExpiresIn": "5d",

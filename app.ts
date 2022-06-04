@@ -9,7 +9,7 @@ import * as compression from 'compression'
 import for_authorized_usersRoutes from './routes/for_authorized_users.routes'
 
 const app = express()
-const PORT: number = config.get('port') || 5000
+export const PORT = process.env.PORT || '5000'
 const mongoUri: string = config.get('mongoUri')
 
 app.use(compression())
