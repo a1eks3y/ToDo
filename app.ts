@@ -29,7 +29,7 @@ app.get('*', ( _req, res ) => {
 async function start(): Promise<void> {
     await mongoose.connect(mongoUri)
     
-    app.get('/', () => {
+    app.get('/', (request, response) => {
         const result = 'App is running'
         response.send(result);
     }).listen(app.get('port'), function() {
