@@ -11,7 +11,7 @@ import for_authorized_usersRoutes from './routes/for_authorized_users.routes'
 const app = express()
 export const PORT = process.env.$PORT || '5000'
 const mongoUri: string = config.get('mongoUri')
-
+app.set('port', (process.env.PORT || 5000))
 app.use(compression())
 
 app.use(express.json())
@@ -28,8 +28,12 @@ app.get('*', ( _req, res ) => {
 
 async function start(): Promise<void> {
     await mongoose.connect(mongoUri)
-    app.listen(PORT, () => {
-        console.log(`App has been started on port ${ PORT }...`)
+    
+    app.get('/', function(request, response) {
+        var result = 'App is running'
+        response.send(result);
+    }).listen(app.get('port'), function() {
+            console.log('App is running, server is listening on port ', app.get('port'));
     })
 }
 
