@@ -769,7 +769,7 @@ router.post('/create', auth,
                             completedAt : [],
                             description : '',
                             categories : [],
-                            endAt : undefined,
+                            endAt : el.endAt,
                             favourites : el.isFavourite ?
                                 tasks.filter(task => typeof task.favourites === 'number').length
                                 :
