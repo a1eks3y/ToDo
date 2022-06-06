@@ -23,7 +23,9 @@ const RightSideBar: React.FC = () => {
                 rightSidebarId.type === ExtensibilityRightSidebarId.SETTINGS ?
                     <Settings/>
                     :
-                    <TaskDetails _id={ rightSidebarId.taskId }/>
+                    <TaskDetails
+                        key={ rightSidebarId.taskId + 'TaskDetails' }
+                        _id={ rightSidebarId.taskId }/>
             }
         </div>
         { isOnFullScreen && <div className={ s.background } onClick={ closeRightSideBar }/> }

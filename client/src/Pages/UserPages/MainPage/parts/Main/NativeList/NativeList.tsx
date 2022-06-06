@@ -56,7 +56,6 @@ const NativeList: React.FC<Props> = (
     const openNavBar = () => {
         dispatch(toggleNavbarActionCreator())
     }
-    // const tasksHeight = window.innerHeight - (isMyDay ? 134 : 111)
     return (
         <article className={ s.list }>
             <div className={ isMyDay ? s.myDayTaskToolbar : s.taskToolbar }>

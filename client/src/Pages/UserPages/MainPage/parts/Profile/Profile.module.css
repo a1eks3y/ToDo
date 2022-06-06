@@ -1,9 +1,9 @@
-.login_box {
+.profile {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
-    z-index: 3;
+    z-index: 5;
     top: 50%;
     left: 50%;
     width: 350px;
@@ -15,7 +15,7 @@
     border-radius: 10px;
 }
 
-.login_box h4 {
+.profile h4 {
     width: 230px;
     margin: 0 0 30px;
     padding: 0;
@@ -131,5 +131,17 @@
     }
     50%, 100% {
         bottom: 100%;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 360px) {
+    .profile{
+        width: 97vw;
+    }
+}
+
+@media (max-width: 320px) {
+    .profile{
+        width: 300px;
     }
 }

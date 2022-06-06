@@ -43,9 +43,9 @@ const CustomDate: React.FC<Props> = (
     const lastDayOfWeek = getDayOfWeek(maxDayOfThisMonth, month, year).num
     const style: CSSProperties = {
         top : offsetHeight + 'px',
-        left : (offsetWidth + width + 221 > window.innerWidth ?
-            offsetWidth - 221 > window.innerWidth ?
-                10 : offsetWidth - 221 : offsetWidth + width + 221) + 'px'
+        left : (offsetWidth + width + 221 > window.innerWidth?
+            offsetWidth - 221 < 10 ?
+                10 : offsetWidth - 221 : offsetWidth + width) + 'px'
     }
     return (
         <div style={ style } className={ s.wrapper }

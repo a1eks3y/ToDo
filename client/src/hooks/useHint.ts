@@ -1,10 +1,5 @@
 import { useState, MouseEvent } from 'react'
 
-export enum positionRelativeToParentVariants {
-    TOP = 'TOP',
-    BOTTOM = 'BOTTOM'
-}
-
 type positionI = {
     bottom: string,
     left: string

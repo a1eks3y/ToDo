@@ -60,8 +60,9 @@ const MainPage: React.FC = () => {
             }
             const lastTaskDetailsId = localStorage.getItem('lastTaskDetailsId')
             localStorage.removeItem('lastTaskDetailsId')
-            if ( lastTaskDetailsId ) {
+            if ( lastTaskDetailsId !== null ) {
                 const lastTask = taskAtTheMoment.current.find(el => el._id === lastTaskDetailsId)
+                console.log( !!lastTask, lastLocation === 'Myday', lastTask?.myDay !== undefined)
                 if ( lastTask && (
                     (lastLocation === 'Myday' && lastTask.myDay !== undefined) ||
                     (lastLocation === 'Favourites' && lastTask.favourites !== undefined) ||
@@ -69,8 +70,10 @@ const MainPage: React.FC = () => {
                     (lastLocation === 'Completed' && lastTask.completedAt !== undefined) ||
                     (lastLocation === 'All') ||
                     (lastTask.forList === lastLocation)
-                ) )
+                ) ) {
+                    console.log(1)
                     curDispatch.current(openTaskDetailsActionCreator(lastTask._id))
+                }
             }
         }
     }, [])
@@ -82,7 +85,7 @@ const MainPage: React.FC = () => {
         localStorage.setItem('lastTaskDetailsId', rightSidebarId.taskId)
 
         localStorage.setItem('isOpenedNavBar', `${ openedNavbar }`)
-        localStorage.setItem('lastLocation', path)
+        localStorage.setItem('lastLocation', path === 'MyDay' ? 'Myday' : path)
     }, [openedNavbar, path, rightSidebarId])
     useEffect(() => {
         if ( !isFirstLoading ) {

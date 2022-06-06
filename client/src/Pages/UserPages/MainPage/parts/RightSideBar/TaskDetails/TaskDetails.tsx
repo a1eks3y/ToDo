@@ -11,6 +11,12 @@ import Categories from './parts/Categories/Categories'
 import Description from './parts/Description/Description'
 import { getDayOfWeek, monthNumberToName } from '../../../../../../store/actionsCreator/syncDateActionCreator'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { Dispatch } from 'redux'
+import { TaskActionI } from '../../../../../../types/todoUserData'
+import { deleteTaskActionCreator } from '../../../../../../store/actionsCreator/todoUserDataActionCreator'
+import { closeRightSidebarActionCreator } from '../../../../../../store/actionsCreator/extensibilityActionCreator'
+import { ExtensibilityActionI } from '../../../../../../types/Extensibility'
 
 interface Props {
     _id: string
@@ -26,6 +32,7 @@ const TaskDetails: React.FC<Props> = ( { _id } ) => {
         .find(el => el._id === _id)
     const time = useTypedSelector(state => state.syncDate.time)
     const location = useLocation().pathname.split('/')[ 1 ]
+    const dispatch = useDispatch<Dispatch<TaskActionI | ExtensibilityActionI>>()
     useEffect(() => {
         const prevTitle = document.title
         if ( task )
@@ -38,6 +45,14 @@ const TaskDetails: React.FC<Props> = ( { _id } ) => {
         return null
     const interfaceRGB = location === 'Completed' || location === 'All' ?
         interfaceColor.RED : interfaceColor.BLUE
+    const deleteTask = () => {
+        dispatch(deleteTaskActionCreator({
+            _id,
+            position : task.position,
+            forList : task.forList
+        }))
+        dispatch(closeRightSidebarActionCreator())
+    }
     return (
         <>
             <div className={ s.taskDetails }>
@@ -95,7 +110,10 @@ const TaskDetails: React.FC<Props> = ( { _id } ) => {
                 </div>
                 <div className={ s.details_footer }>
                     <div>
-                        <button className={ 'clear-btn-style ' + s.footer_btn }>
+                        <button
+                            className={ 'clear-btn-style ' + s.footer_btn }
+                            onClick={ () => dispatch(closeRightSidebarActionCreator()) }
+                        >
                             <i className={ s.closeIcon + ' ' + s.icon }/>
                         </button>
                     </div>
@@ -123,7 +141,10 @@ const TaskDetails: React.FC<Props> = ( { _id } ) => {
                         }
                     </span>
                     <div>
-                        <button className={ 'clear-btn-style ' + s.footer_btn }>
+                        <button
+                            className={ 'clear-btn-style ' + s.footer_btn }
+                            onClick={ deleteTask }
+                        >
                             <i className={ s.deleteIcon + ' ' + s.icon }/>
                         </button>
                     </div>

@@ -120,6 +120,10 @@ const AddTask: React.FC<Props> = (
                         onMouseEnter={ deadline.onParentMouseEnter }
                     >
                         <i className={ s.icon_calendar }/>
+                        {
+                            item?.type !== contextMenuActionType.CHOOSE_DATE &&
+                            deadline.pos && <Hint hintText={ deadline.hintText } pos={ deadline.pos }/>
+                        }
                         { chosenDate &&
                             <span className={ s.chosen_date }>
                                 {
@@ -152,9 +156,6 @@ const AddTask: React.FC<Props> = (
                                 }
                             </span>
                         }
-                        {
-                            item?.type !== contextMenuActionType.CHOOSE_DATE &&
-                            deadline.pos && <Hint hintText={ deadline.hintText } pos={ deadline.pos }/> }
                     </li>
                     {/*  notification coming soon  */ }
                 </ul>

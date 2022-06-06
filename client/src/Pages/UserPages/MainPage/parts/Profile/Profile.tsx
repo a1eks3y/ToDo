@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
     if ( !isOpened || !auth )
         return null
     return (
-        <div className={ s.profile + ' ' + s.login_box } onMouseUp={ e => e.preventDefault() }>
+        <div className={ s.profile } onMouseUp={ e => e.preventDefault() }>
             <h4>Hi, { auth.username }</h4>
             <button className={ s.btn } onClick={ e => {
                 e.preventDefault()
