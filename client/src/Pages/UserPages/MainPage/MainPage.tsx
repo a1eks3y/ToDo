@@ -68,6 +68,7 @@ const MainPage: React.FC = () => {
                     (lastLocation === 'Favourites' && lastTask.favourites !== undefined) ||
                     (lastLocation === 'Planned' && lastTask.endAt !== undefined) ||
                     (lastLocation === 'Completed' && lastTask.completedAt !== undefined) ||
+                    (lastLocation === 'Tasks' && lastTask.forList === undefined) ||
                     (lastLocation === 'All') ||
                     (lastTask.forList === lastLocation)
                 ) ) {
