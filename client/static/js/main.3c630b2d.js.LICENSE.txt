@@ -79,6 +79,7 @@ object-assign
 
 /*!
          * toString helper
+         * TODO remove? This defaults to `${this.name}: ${this.message}`
          */
 
 /*!
