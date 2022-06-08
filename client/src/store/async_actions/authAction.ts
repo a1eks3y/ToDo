@@ -35,8 +35,26 @@ export const AuthRegisterAction = ( payload: IRegisterAction ) => {
                 dispatch(willBeDeletedMessageActionCreator(id))
             }, 3250)
         } catch (e: any) {
-            if ( e.response.status !== 401 ) {
-                const message = e.response.message || e.response.data.message
+            if ( e.response.status === 400 && Array.isArray(e.response?.data?.errors) ) {
+                dispatch(logoutActionCreator())
+                for ( let i = 0 ; i < e.response.data.errors.length ; i++ ) {
+                    if ( e.response.data.errors[i].msg ) {
+                        const msg = e.response.data.errors[i].msg as string
+                        const msgId = id + i + 1
+                        dispatch(
+                            addMessageActionCreator(
+                                msgId,
+                                msg,
+                                true
+                            )
+                        )
+                        setTimeout(() => {
+                            dispatch(willBeDeletedMessageActionCreator(msgId))
+                        }, 6000)
+                    }
+                }
+            } else if ( e.response.status !== 401 ) {
+                const message = e.response?.data.message || 'Something went wrong. Try again later...'
                 dispatch(logoutActionCreator())
                 dispatch(
                     addMessageActionCreator(
@@ -83,13 +101,9 @@ export const AuthLoginFormAction = ( payload: ILoginAction ) => {
             }))
         } catch (e) {
             const err = e as AxiosError
-            const message = err.message || err.response?.data.message
+            const message = err.response?.data.message || 'Something went wrong. Try again later...'
             dispatch(logoutActionCreator())
-            dispatch(addMessageActionCreator(
-                id,
-                message || 'Something went wrong. Try again later...',
-                true
-            ))
+            dispatch(addMessageActionCreator(id, message, true))
             setTimeout(() => {
                 dispatch(willBeDeletedMessageActionCreator(id))
             }, 6000)
@@ -136,7 +150,7 @@ export const AuthLoginJWTAction = () => {
         } catch (e) {
             const err = e as AxiosError
             if ( err.response?.status !== 409 ) localStorage.removeItem('jwt')
-            const message = err.message || err.response?.data.message || 'Something went wrong. Try again later...'
+            const message = err.response?.data.message || 'Something went wrong. Try again later...'
             dispatch(logoutActionCreator())
             dispatch(addMessageActionCreator(id, message, true)
             )

@@ -23,6 +23,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    padding: 0 !important;
 }
 
 .btn::after, .btn::before {

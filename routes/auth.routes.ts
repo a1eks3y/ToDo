@@ -50,6 +50,7 @@ router.post('/register',
             }
 
             const hashedPassword = await bcrypt.hash(password, 12)
+            console.log(password, hashedPassword)
             const ConfirmEmail = shortid.generate()
             const user = new UserModel({
                 email,
@@ -108,10 +109,13 @@ router.post('/login/form',
             }
 
             const user = await UserModel.findOne({ email : req.body.email })
+
             if ( !user ) {
                 return res.status(400).json({ message : 'User not found.' })
             }
+
             const isMatch = await bcrypt.compare(req.body.password, user.password)
+            console.log(req.body.password, user.password, isMatch)
             if ( !isMatch ) return res.status(400).json({ message : 'User not found.' })
 
             if ( user.ConfirmEmail && typeof JSON.parse(user.ConfirmEmail) == 'string' ) {
