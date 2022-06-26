@@ -118,7 +118,7 @@ router.post('/login/form',
             console.log(req.body.password, user.password, isMatch)
             if ( !isMatch ) return res.status(400).json({ message : 'User not found.' })
 
-            if ( user.ConfirmEmail && typeof JSON.parse(user.ConfirmEmail) == 'string' ) {
+            if ( user.ConfirmEmail && typeof user.ConfirmEmail == 'string' ) {
                 const confirmEmailUrl = `${ config.get('baseUrl') }/api/confirmEmail/${ user.ConfirmEmail }`
                 await transporter.sendMail({
                     from : config.get('email'),
