@@ -29,9 +29,9 @@ const transporter = nodemailer.createTransport({
 
 router.post('/register',
     check('email', 'Incorrect email').isEmail().normalizeEmail(),
-    check('password', 'Password must be at least 6 characters')
+    check('password', 'Password must be at least 6 characters and no more than 18 characters')
         .isLength({ min : 6, max : 18 }),
-    check('username', 'Username must be at least 5 characters')
+    check('username', 'Username must be at least 5 characters and no more than 18 characters')
         .isLength({ min : 5, max : 18 }),
     check('Timezone').exists(),
     async ( req: express.Request<any, any, registerReq>, res ) => {

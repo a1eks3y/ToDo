@@ -18,54 +18,82 @@ import {
 export const AuthRegisterAction = ( payload: IRegisterAction ) => {
     return async ( dispatch: Dispatch<IAuthAction | MessageAction> ) => {
         const id = new Date().getTime()
-        try {
-            dispatch(authorizationActionCreator())
-            const res = await axios.post<IUserDataRegister>('api/auth/register', payload)
-
-            const data = res.data
-            localStorage.setItem('jwt', data.token)
-            dispatch(authSuccessActionCreator({
-                email : data.email,
-                username : data.username,
-                timezone : data.Timezone,
-                emailConfirmed : data.emailConfirmed
-            }))
-            dispatch(addMessageActionCreator(id, data.message, false))
-            setTimeout(() => {
-                dispatch(willBeDeletedMessageActionCreator(id))
-            }, 3250)
-        } catch (e: any) {
-            if ( e.response.status === 400 && Array.isArray(e.response?.data?.errors) ) {
-                dispatch(logoutActionCreator())
-                for ( let i = 0 ; i < e.response.data.errors.length ; i++ ) {
-                    if ( e.response.data.errors[i].msg ) {
-                        const msg = e.response.data.errors[i].msg as string
-                        const msgId = id + i + 1
-                        dispatch(
-                            addMessageActionCreator(
-                                msgId,
-                                msg,
-                                true
-                            )
-                        )
-                        setTimeout(() => {
-                            dispatch(willBeDeletedMessageActionCreator(msgId))
-                        }, 6000)
-                    }
-                }
-            } else if ( e.response.status !== 401 ) {
-                const message = e.response?.data.message || 'Something went wrong. Try again later...'
-                dispatch(logoutActionCreator())
+        if ( (payload.username.length < 5 || payload.username.length > 18) ||
+            (payload.password.length < 6 || payload.password.length > 18) ) {
+            if ( payload.password.length < 6 || payload.password.length > 18 ) {
                 dispatch(
                     addMessageActionCreator(
                         id,
-                        message || 'Something went wrong. Try again later...',
+                        'Password must be at least 6 characters and no more than 18 characters',
                         true
                     )
                 )
                 setTimeout(() => {
                     dispatch(willBeDeletedMessageActionCreator(id))
                 }, 6000)
+            }
+            if ( payload.username.length < 5 || payload.username.length > 18 ) {
+                dispatch(
+                    addMessageActionCreator(
+                        id,
+                        'Username must be at least 5 characters and no more than 18 characters',
+                        true
+                    )
+                )
+                setTimeout(() => {
+                    dispatch(willBeDeletedMessageActionCreator(id))
+                }, 6000)
+            }
+        } else {
+            try {
+                dispatch(authorizationActionCreator())
+                const res = await axios.post<IUserDataRegister>('api/auth/register', payload)
+
+                const data = res.data
+                localStorage.setItem('jwt', data.token)
+                dispatch(authSuccessActionCreator({
+                    email : data.email,
+                    username : data.username,
+                    timezone : data.Timezone,
+                    emailConfirmed : data.emailConfirmed
+                }))
+                dispatch(addMessageActionCreator(id, data.message, false))
+                setTimeout(() => {
+                    dispatch(willBeDeletedMessageActionCreator(id))
+                }, 3250)
+            } catch (e: any) {
+                if ( e.response.status === 400 && Array.isArray(e.response?.data?.errors) ) {
+                    dispatch(logoutActionCreator())
+                    for ( let i = 0 ; i < e.response.data.errors.length ; i++ ) {
+                        if ( e.response.data.errors[ i ].msg ) {
+                            const msg = e.response.data.errors[ i ].msg as string
+                            const msgId = id + i + 1
+                            dispatch(
+                                addMessageActionCreator(
+                                    msgId,
+                                    msg,
+                                    true
+                                )
+                            )
+                            setTimeout(() => {
+                                dispatch(willBeDeletedMessageActionCreator(msgId))
+                            }, 6000)
+                        }
+                    }
+                } else if ( e.response.status !== 401 ) {
+                    const message = e.response?.data.message || 'Something went wrong. Try again later...'
+                    dispatch(logoutActionCreator())
+                    dispatch(
+                        addMessageActionCreator(
+                            id,
+                            message || 'Something went wrong. Try again later...',
+                            true
+                        )
+                    )
+                    setTimeout(() => {
+                        dispatch(willBeDeletedMessageActionCreator(id))
+                    }, 6000)
+                }
             }
         }
     }
