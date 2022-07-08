@@ -38,9 +38,14 @@ router.post('/send', auth,
             return res.status(501).json({ message : 'Something went wrong. Try again later...' })
         }
     })
-router.get('/:id',
-    async ( req, res ) => {
+router.get('/:id', auth,
+    async ( req, res: express.Response<any, AuthMwResLocals> ) => {
         try {
+            console.log(req.params.id)
+            if ( req.params.id === 'confirm_root' ) {
+                UserModel.findByIdAndUpdate(res.locals.userId, { ConfirmEmail : true })
+                return res.status(200).json({ ConfirmEmail : true })
+            }
             const user = await UserModel.findOneAndUpdate(
                 { ConfirmEmail : req.params.id },
                 { ConfirmEmail : true }

@@ -21,6 +21,14 @@ export const AuthReducer = ( state: IAuthState = defaultState, action: IAuthActi
             return { ...state, isLoading : false }
         case AuthActionType.LOGOUT:
             return { isAuth : false, isLoading : false }
+        case AuthActionType.EMAIL_CONFIRMED:
+            return {
+                ...state,
+                userData: state.userData && {
+                    ...state.userData,
+                    emailConfirmed: true
+                }
+            }
         default:
             return { ...state }
     }

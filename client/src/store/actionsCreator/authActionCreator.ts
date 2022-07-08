@@ -1,6 +1,6 @@
 import {
     AuthActionAuthorization,
-    AuthActionAuthorizationSuccess,
+    AuthActionAuthorizationSuccess, AuthActionEmailConfirmed,
     AuthActionLogout,
     AuthActionType
 } from '../../types/Auth'
@@ -23,4 +23,8 @@ export const logoutActionCreator = ():AuthActionLogout => ({
 
 export const authorizationActionCreator = ():AuthActionAuthorization => ({
     type: AuthActionType.AUTHORIZATION
+})
+
+export const emailConfirmedActionCreator = ():AuthActionEmailConfirmed => ({
+    type: AuthActionType.EMAIL_CONFIRMED
 })

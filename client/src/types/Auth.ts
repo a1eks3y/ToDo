@@ -11,6 +11,7 @@ export interface IAuthState {
 
 export enum AuthActionType {
     AUTHORIZATION = '@auth/AUTHORIZATION',
+    EMAIL_CONFIRMED = '@auth/EMAIL_CONFIRMED',
     AUTHORIZATION_SUCCESS = '@auth/AUTHORIZATION_SUCCESS',
     AUTHORIZATION_ERROR = '@auth/AUTHORIZATION_ERROR',
     LOGOUT = '@auth/LOGOUT'
@@ -18,6 +19,10 @@ export enum AuthActionType {
 
 export interface AuthActionAuthorization {
     type: AuthActionType.AUTHORIZATION
+}
+
+export interface AuthActionEmailConfirmed {
+    type: AuthActionType.EMAIL_CONFIRMED
 }
 
 export interface AuthActionAuthorizationSuccess {
@@ -38,7 +43,8 @@ export interface AuthActionLogout {
     type: AuthActionType.LOGOUT
 }
 
-export type IAuthAction = AuthActionAuthorization | AuthActionAuthorizationSuccess | AuthActionLogout | AuthActionError
+export type IAuthAction = AuthActionAuthorization | AuthActionAuthorizationSuccess | AuthActionLogout |
+    AuthActionError | AuthActionEmailConfirmed
 
 //for async_actions
 

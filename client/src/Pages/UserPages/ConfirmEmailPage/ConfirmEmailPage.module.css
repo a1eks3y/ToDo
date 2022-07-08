@@ -15,13 +15,13 @@
     color: #787993;
 }
 .buttons{
-    width: 330px;
+    gap: 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 .btn_send {
-    width: 230px;
+    padding: 0 20px;
     height: 3rem;
     border-radius: 23px;
     color: #7540EE;
@@ -31,15 +31,16 @@
 .btn_send:hover, .btn_send:focus {
     background: rgba(117, 64, 238, 0.4);
 }
-.btn_logout {
-    width: 90px;
+.orange_btn {
+    width: auto;
+    padding: 0 20px;
     height: 3rem;
     border-radius: 23px;
     color: #FF7052;
     background: rgba(255, 112, 82, .2);
     transition: all .2s ease-out;
 }
-.btn_logout:hover, .btn_logout:focus {
+.orange_btn:hover, .orange_btn:focus {
     background: rgba(255, 112, 82, 0.4);
 }
 .btn_send:disabled, .btn_logout:disabled{
